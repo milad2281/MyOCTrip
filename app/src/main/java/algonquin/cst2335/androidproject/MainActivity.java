@@ -2,6 +2,7 @@ package algonquin.cst2335.androidproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -23,7 +24,20 @@ public class MainActivity extends AppCompatActivity {
         sgBtn = findViewById(R.id.sgBtn);
 
         brBtn.setOnClickListener(click->{
-            
+//            Intent nextPage = new Intent( MainActivity.this, nameOfClass.class);
+//            startActivity(nextPage);
+        });
+        ecBtn.setOnClickListener(click->{
+//            Intent nextPage = new Intent( MainActivity.this, nameOfClass.class);
+//            startActivity(nextPage);
+        });
+        miBtn.setOnClickListener(click->{
+//            Intent nextPage = new Intent( MainActivity.this, nameOfClass.class);
+//            startActivity(nextPage);
+        });
+        sgBtn.setOnClickListener(click->{
+//            Intent nextPage = new Intent( MainActivity.this, nameOfClass.class);
+//            startActivity(nextPage);
         });
     }
 }
