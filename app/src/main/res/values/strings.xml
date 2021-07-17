@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">AndroidProject</string>
+    <!--  Bus Route  -->
     <string name="br_app_name">OCTranspo Bus Route App</string>
+    <string name="br_search">Search for bus route</string>
+    <!--  Electric Car   -->
     <string name="ec_app_name">Electric Car Charging Station finder</string>
+    <!--  Movie Information  -->
     <string name="mi_app_name"> Movie Information</string>
+    <!-- Soccer Games   -->
     <string name="sg_app_name">Soccer games api</string>
+
 </resources>
