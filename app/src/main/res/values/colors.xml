@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--  Bus Route  -->
+    <color name="br_light_blue">#00BCD4</color>
+    <color name="br_light_red">#E91E63</color>
+    <color name="br_search_btn">#00FF0A</color>
+    <color name="br_fav_btn">#FF9800</color>
+    <color name="br_orange">#FF7B10</color>
+    <color name="br_sep_line">#5C6AB5</color>
 </resources>
