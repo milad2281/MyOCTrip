@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import algonquin.cst2335.androidproject.busroute.BusRoute;
+
 public class MainActivity extends AppCompatActivity {
 
     Button brBtn;
@@ -24,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         sgBtn = findViewById(R.id.sgBtn);
 
         brBtn.setOnClickListener(click->{
-//            Intent nextPage = new Intent( MainActivity.this, nameOfClass.class);
-//            startActivity(nextPage);
+            Intent nextPage = new Intent( MainActivity.this, BusRoute.class);
+            startActivity(nextPage);
         });
         ecBtn.setOnClickListener(click->{
 //            Intent nextPage = new Intent( MainActivity.this, nameOfClass.class);
