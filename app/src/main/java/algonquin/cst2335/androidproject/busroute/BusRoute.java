@@ -17,18 +17,18 @@ public class BusRoute extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.br_empty_layout);
-        isTablet = false;
-//        isTablet = findViewById(R.id.detailsRoom) != null;
+        isTablet = findViewById(R.id.detailsRoute) != null;
         busRouteList = new RouteListFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fragmentRoute, busRouteList).commit();
     }
 
-    public void openRouteDetails(RouteListFragment.Route route, int position) {
-//        RouteDetailFragment mdFragment = new RouteDetailFragment(route,position);
-//        if (isTablet){
-//            getSupportFragmentManager().beginTransaction().replace(R.id.,mdFragment).commit();
-//        }else{
-//            getSupportFragmentManager().beginTransaction().add(R.id.fragmentRoom,mdFragment).commit();
-//        }
+    public void openRouteDetails(Route route, int position) {
+        RouteDetailFragment mdFragment = new RouteDetailFragment(route, position);
+        if (isTablet) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.detailsRoute, mdFragment).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentRoute, mdFragment).commit();
+        }
     }
+
 }

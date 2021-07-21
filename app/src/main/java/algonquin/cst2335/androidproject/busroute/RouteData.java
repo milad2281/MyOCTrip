@@ -11,11 +11,19 @@ import java.util.List;
 public class RouteData {
     /**
      * Returns a list of bus numbers passing through the given station route number
+     * First route is the station name and the station number
      * @param routeNum bus station route number
      * @return list of all buses passing through this station
      */
-    public static List<Object> getAllRoutes(int routeNum){
-        return new LinkedList<>();
+    public static LinkedList<Route> getAllRoutes(String routeNum){
+        LinkedList<Route> allRoutes = new LinkedList<>();
+        allRoutes.add(new Route("College Square",3070));
+        allRoutes.add(new Route("Tunney's pasture",63));
+        allRoutes.add(new Route("River Side",95));
+        allRoutes.add(new Route("Carleton",111));
+        allRoutes.add(new Route("Tunney's pasture",282));
+        allRoutes.add(new Route("CityCenter",256));
+        return allRoutes;
     }
 
     /**

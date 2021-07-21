@@ -91,7 +91,7 @@ public class OCDB extends SQLiteOpenHelper {
      *
      * @return a 2D list of all favorite routes
      */
-    public static List<List<Object>> getAllRoutes() {
+    public static List<Route> getAllRoutes() {
         return new LinkedList<>();
     }
 }
