@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -47,10 +50,12 @@ public class RouteListFragment extends Fragment {
     String searchedValue;
     String stationName;
     AppCompatActivity parent;
+
     public RouteListFragment(AppCompatActivity parent) {
         this.parent = parent;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View busRouteLayout = inflater.inflate(R.layout.br_bus_routes, container, false);
@@ -76,16 +81,22 @@ public class RouteListFragment extends Fragment {
         searchedRouteNum.setText(searchedValue);
         //Click Listener for the search button
         searchBtn.setOnClickListener(e -> {
-            //Getting the searched value
-            searchedValue = searchedRouteNum.getText().toString();
-            //checking searched value
-            if (!searchedValue.equals("")) {
-                // Adding value to shared preferences
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("lastRouteSearched", searchedValue);
-                editor.apply();
-                //Get Data and Set Up view list
-                setUpViewList();
+            String temp = searchedRouteNum.getText().toString();
+            //check if not empty
+            if (!temp.equals("")) {
+                //checking searched value
+                if (temp.matches("^[0-9]{3,}$")) {
+                    //Getting the searched value
+                    searchedValue = temp;
+                    // Adding value to shared preferences
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("lastRouteSearched", searchedValue);
+                    editor.apply();
+                    //Get Data and Set Up view list
+                    setUpViewList();
+                } else {
+                    makeToast("Not a valid station");
+                }
             } else {
                 makeToast("Field can not be empty");
             }
@@ -105,7 +116,6 @@ public class RouteListFragment extends Fragment {
         if (!searchedValue.equals("")) {
             setUpViewList();
         }
-
         return busRouteLayout;
     }
 
@@ -120,7 +130,10 @@ public class RouteListFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setUpViewList() {
+        routeList.removeAllViews();
+        allRoutes.clear();
         //Loading dialog
         AlertDialog dialog = new AlertDialog.Builder(getContext())
                 .setTitle("Getting Bus Routes")
@@ -135,9 +148,8 @@ public class RouteListFragment extends Fragment {
             Route station = gottenRoutes.pollFirst();
             //checking for any errors
             if (!station.getRouteNumber().equals("-1")) {
-                 parent.runOnUiThread(() -> {
-                    adt.notifyItemRangeRemoved(0, allRoutes.size() - 1);
-                    allRoutes.clear();
+                parent.runOnUiThread(() -> {
+
                     addToFavorite.setVisibility(View.VISIBLE);
                     stationNumberView.setText(station.getRouteNumber());
                     stationNumberView.setVisibility(View.VISIBLE);
@@ -152,16 +164,13 @@ public class RouteListFragment extends Fragment {
                     }
                     searchedRouteNum.setText("");
                     adt.notifyItemInserted(allRoutes.size() - 1);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException interruptedException) {
-                        interruptedException.printStackTrace();
-                    }
                     dialog.hide();
                 });
             } else {
-                dialog.hide();
-                makeToast(station.getRouteName());
+                parent.runOnUiThread(() -> {
+                    dialog.hide();
+                    makeToast(station.getRouteName());
+                });
             }
         });
     }
@@ -192,6 +201,14 @@ public class RouteListFragment extends Fragment {
     }
 
     private class RouteAdapter extends RecyclerView.Adapter<RouteView> {
+        @Override
+        public int getItemViewType(int position) {
+//            Route thisRow = allRoutes.get(position);
+//            return (int) thisRow.getId();
+            return 1;
+
+        }
+
         @Override
         public RouteView onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = getLayoutInflater();

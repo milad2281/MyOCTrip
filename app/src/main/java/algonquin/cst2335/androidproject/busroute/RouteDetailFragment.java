@@ -1,6 +1,7 @@
 package algonquin.cst2335.androidproject.busroute;
 
 import android.content.ContentValues;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import algonquin.cst2335.androidproject.R;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -32,6 +34,7 @@ public class RouteDetailFragment extends Fragment {
         this.parent = parent;
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View detailsView = inflater.inflate(R.layout.br_route_detail_layout,container,false);
