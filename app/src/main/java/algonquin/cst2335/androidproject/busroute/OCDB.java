@@ -57,7 +57,7 @@ public class OCDB extends SQLiteOpenHelper {
      * @param routeNum bus route number to be checked
      * @return True if it is in favorite list and flase if not
      */
-    public static boolean check_route(int routeNum) {
+    public static boolean check_route(String routeNum) {
         return true;
     }
 
@@ -68,7 +68,7 @@ public class OCDB extends SQLiteOpenHelper {
      * @param routeName the bus route name to be added to favorites
      * @return true if adding was successful or false if not
      */
-    public static boolean add_to_favorite(int routeNum, String routeName) {
+    public static boolean add_to_favorite(String routeNum, String routeName) {
         return true;
     }
 
@@ -79,7 +79,7 @@ public class OCDB extends SQLiteOpenHelper {
      * @return return true on success, false if not
      * @throws NullPointerException if the route number does not exists in database
      */
-    public static boolean remove_route(int routeNum) throws NullPointerException {
+    public static boolean remove_route(String routeNum) throws NullPointerException {
         if (check_route(routeNum)) {
             throw new NullPointerException("The route number does not exists in database!");
         }

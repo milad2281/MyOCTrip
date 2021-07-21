@@ -42,7 +42,7 @@ public class FavoriteListFragment extends Fragment {
         Cursor results = db.rawQuery("SELECT * FROM "+ OCDB.TABLE_NAME +";", null);
         while(results.moveToNext()) {
             long id = results.getInt(results.getColumnIndex("_id"));
-            int routeNum = results.getInt(results.getColumnIndex(OCDB.col_routeNum));
+            String routeNum = results.getString(results.getColumnIndex(OCDB.col_routeNum));
             String routeName = results.getString(results.getColumnIndex(OCDB.col_routeName));
             allRoutes.add(new Route(routeName, routeNum, id));
         }
@@ -68,7 +68,7 @@ public class FavoriteListFragment extends Fragment {
             editor.putString("lastRouteSearched", searchedValue);
             editor.apply();
 
-            Route thisRoute = new Route( searchedValue, 63);
+            Route thisRoute = new Route( searchedValue, "63");
             ContentValues newRow = new ContentValues();
             newRow.put(OCDB.col_routeName, thisRoute.getRouteName());
             newRow.put(OCDB.col_routeNum, thisRoute.getRouteNumber());
@@ -78,7 +78,11 @@ public class FavoriteListFragment extends Fragment {
             searchedRouteNum.setText("");
             adt.notifyItemInserted(allRoutes.size()-1);
         });
-
+//        deleteBtn.setOnClickListener(click->{
+//            ChatRoom parentActivity = (ChatRoom)getContext();
+//            parentActivity.notifyMessageDeleted(chosenMessage,chosenPosition);
+//            getParentFragmentManager().beginTransaction().remove(this).commit();
+//        });
         return favRouteLayout;
     }
 
@@ -151,8 +155,9 @@ public class FavoriteListFragment extends Fragment {
     private class RouteAdapter extends RecyclerView.Adapter<RouteView>{
         @Override
         public int getItemViewType(int position) {
-            Route thisRow = allRoutes.get(position);
-            return thisRow.getRouteNumber();
+//            Route thisRow = allRoutes.get(position);
+//            return thisRow.getRouteNumber();
+            return 0;
         }
 
         @Override
@@ -165,7 +170,7 @@ public class FavoriteListFragment extends Fragment {
         @Override
         public void onBindViewHolder(RouteView holder, int position) {
             holder.routeName.setText(allRoutes.get(position).getRouteName());
-            holder.routeNumber.setText(Integer.toString(allRoutes.get(position).getRouteNumber()));
+            holder.routeNumber.setText(allRoutes.get(position).getRouteNumber());
             holder.setPosition(position);
         }
 

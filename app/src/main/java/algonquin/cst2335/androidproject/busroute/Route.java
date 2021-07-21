@@ -5,16 +5,22 @@ package algonquin.cst2335.androidproject.busroute;
  * this route can be a bus station or a bus number
  */
 public class Route {
+    /**
+     * name of the station, or bus destination
+     */
         private String routeName;
-        private int routeNumber;
+    /**
+     * bus or station number
+     */
+    private String routeNumber;
         private long id;
 
-        public Route(String name, int number) {
+        public Route(String name, String number) {
             this.routeName = name;
             this.routeNumber = number;
         }
 
-        public Route(String name, int number, long id) {
+        public Route(String name, String number, long id) {
             this.routeName = name;
             this.routeNumber = number;
             this.id = id;
@@ -24,7 +30,7 @@ public class Route {
             return routeName;
         }
 
-        public int getRouteNumber() {
+        public String getRouteNumber() {
             return routeNumber;
         }
 
