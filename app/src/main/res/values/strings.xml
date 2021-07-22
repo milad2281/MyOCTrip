@@ -11,6 +11,7 @@
     <string name="br_detail_map">View on map</string>
     <string name="br_fav_routes">My Favorite Routes</string>
     <string name="br_remove">Remove</string>
+    <string name="br_close">Close</string>
     <!--  Electric Car   -->
     <string name="ec_app_name">Electric Car Charging Station finder</string>
     <!--  Movie Information  -->

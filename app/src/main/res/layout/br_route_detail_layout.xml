@@ -14,7 +14,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/br_rounded_corner"
-        android:text="61"
+        android:text=""
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/br_detail_station_number"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:text="Tunney's Pasture"
+        android:text=""
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/br_detail_num"
         app:layout_constraintStart_toEndOf="@+id/br_detail_num"
@@ -93,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:text="-75.923537,45.260904"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="@+id/br_detail_location"
         app:layout_constraintStart_toEndOf="@+id/br_detail_location"
         app:layout_constraintTop_toTopOf="@+id/br_detail_location" />
@@ -103,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:text="N/A"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="@+id/br_detail_speed"
         app:layout_constraintStart_toEndOf="@+id/br_detail_speed"
         app:layout_constraintTop_toTopOf="@+id/br_detail_speed" />
@@ -113,7 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:text="10:51"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="@+id/br_detail_start_time"
         app:layout_constraintStart_toEndOf="@+id/br_detail_start_time"
         app:layout_constraintTop_toTopOf="@+id/br_detail_start_time" />
@@ -123,7 +123,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:text="32"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="@+id/br_detail_time"
         app:layout_constraintStart_toEndOf="@+id/br_detail_time"
         app:layout_constraintTop_toTopOf="@+id/br_detail_time" />
@@ -135,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:text="close"
+        android:text="@string/br_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,7 +146,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="24dp"
         android:background="@color/br_orange"
-        android:text="3050"
+        android:text=""
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

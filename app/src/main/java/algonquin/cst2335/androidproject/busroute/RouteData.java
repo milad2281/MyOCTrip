@@ -80,35 +80,17 @@ public class RouteData {
             JSONObject routeSummery = routeInformation.getJSONObject("GetRouteSummaryForStopResult");
             String errorText = routeSummery.getString("Error");
             //check for any errors
-            if (!errorText.equals("")) {
-                switch (errorText) {
-                    case "10":
-                        errorText = "Invalid stop number";
-                        break;
-                    case "11":
-                        errorText = "Invalid route number";
-                        break;
-                    case "12":
-                        errorText = "Stop does not service route at this time";
-                        break;
-                    case "13":
-                        errorText = "No routes available at stop at any time";
-                        break;
-                    default:
-                        errorText = "Unable to query data source";
-                }
-                throw new IllegalStateException(errorText);
-            }
+            errorCheck(errorText);
+
             allRoutes.add(new Route(routeSummery.getString("StopDescription"), routeSummery.getString("StopNo")));
             JSONObject routesObj = routeSummery.getJSONObject("Routes");
             JSONArray routeArr = routesObj.getJSONArray("Route");
+            //getting all routes
             int len = routeArr.length();
             for (int i = 0; i < len; i++) {
                 JSONObject route = routeArr.getJSONObject(i);
                 String busNumber = route.getString("RouteNo");
-                ;
                 String busDest = route.getString("RouteHeading");
-                ;
                 Route newRoute = new Route(busDest, busNumber);
                 allRoutes.add(newRoute);
             }
@@ -117,16 +99,16 @@ public class RouteData {
             return createRouteError(e.getMessage() + ".\nPlease try again.");
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            return createRouteError("There was some error connecting to server.\nPlease try again.");
+            return createRouteError("There was an error getting to server.\nPlease try again.");
         } catch (JSONException e) {
             e.printStackTrace();
-            return createRouteError("There was some error parsing data.\nPlease try again.");
+            return createRouteError("Currently there is no online data.\nPlease try again.");
         } catch (IOException e) {
             e.printStackTrace();
-            return createRouteError("There was some error reading data.\nPlease try again.");
+            return createRouteError("There was an error connecting to server.\nPlease try again.");
         }
         if (allRoutes.size() < 1) {
-            return createRouteError("There was some error getting data.\nPlease try again.");
+            return createRouteError("There was an error getting data.\nPlease try again.");
         }
         return allRoutes;
     }
@@ -146,32 +128,96 @@ public class RouteData {
             URL url = new URL(stringUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
             String text = (new BufferedReader(
                     new InputStreamReader(in, StandardCharsets.UTF_8)))
                     .lines()
                     .collect(Collectors.joining("\n"));
 
-            JSONObject theDocument = new JSONObject(text);
+            JSONObject routeInformation = new JSONObject(text);
+
+            JSONObject routeSummery = routeInformation.getJSONObject("GetNextTripsForStopResult");
+            String errorText = routeSummery.getString("Error");
+            //check for any errors
+            errorCheck(errorText);
+            if(!bus.getStationNumber().equals(routeSummery.getString("StopNo"))){
+                throw new IllegalStateException("Could not get the correct route.\nPlease try again.");
+            }
+            JSONObject routesObj = routeSummery.getJSONObject("Route");
+            JSONArray routeArr = routesObj.getJSONArray("RouteDirection");
+
+            JSONObject route = routeArr.getJSONObject(0);
+            String routeDest = route.getString("RouteLabel");
+            //Check for the direction of the bus to match with wanted
+            if (!bus.getBusDest().equals(routeDest)) {
+                route = routeArr.getJSONObject(1);
+                routeDest = route.getString("RouteLabel");
+            }
+
+            errorText = route.getString("Error");
+            //check for any errors
+            errorCheck(errorText);
+            JSONObject trips = route.getJSONObject("Trips");
+            JSONArray trip = trips.getJSONArray("Trip");
+            JSONObject nextBus = trip.getJSONObject(0);
+
+            bus.setDelay(nextBus.getString("AdjustedScheduleTime"));
+            bus.setLatitude(nextBus.getString("Latitude"));
+            bus.setLongitude(nextBus.getString("Longitude"));
+            bus.setSpeed(nextBus.getString("GPSSpeed"));
+            bus.setStartTime(nextBus.getString("TripStartTime"));
+
+        } catch (IllegalStateException e) {
+            bus.setStationNumber(e.getMessage() + ".\nPlease try again.");
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            bus.setStationNumber("There was some error connecting to server.\nPlease try again.");
         } catch (JSONException e) {
             e.printStackTrace();
+            bus.setStationNumber("Currently there is no online data.\nMaybe try again later.");
         } catch (IOException e) {
             e.printStackTrace();
+            bus.setStationNumber("There was some error reading data.\nPlease try again.");
         }
-        bus.setDelay("");
-        bus.setLatitude("");
-        bus.setLongitude("");
-        bus.setSpeed("");
-        bus.setStartTime("");
 
         return bus;
     }
 
+    /**
+     * create a error message of return type with given text
+     * @param error error message text
+     * @return error object to be returned
+     */
     private static LinkedList<Route> createRouteError(String error) {
         LinkedList<Route> allRoutes = new LinkedList<>();
         allRoutes.add(new Route(error, "-1"));
         return allRoutes;
+    }
+
+    /**
+     * checks an error code based on API's documentation, throws exception with the error message
+     * @param errorText the text to be checked
+     * @throws IllegalStateException if there was an error
+     */
+    private static void errorCheck(String errorText) throws IllegalStateException {
+        //check for any errors
+        if (!errorText.equals("")) {
+            switch (errorText) {
+                case "10":
+                    errorText = "Invalid stop number";
+                    break;
+                case "11":
+                    errorText = "Invalid route number";
+                    break;
+                case "12":
+                    errorText = "Stop does not service route at this time";
+                    break;
+                case "13":
+                    errorText = "No routes available at stop at any time";
+                    break;
+                default:
+                    errorText = "Unable to query data source";
+            }
+            throw new IllegalStateException(errorText);
+        }
     }
 }
