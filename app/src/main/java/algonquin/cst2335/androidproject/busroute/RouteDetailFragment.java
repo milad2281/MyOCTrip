@@ -74,7 +74,8 @@ public class RouteDetailFragment extends Fragment {
                     makeToast(bus.getStationNumber());
                     //removing dialog
                     dialog.hide();
-                    closePage();
+                    BusRoute parentActivity = (BusRoute) getContext();
+                    parentActivity.closePage(this);
                 } else {
                     stationNumberView.setText(bus.getStationNumber());
                     locationView.setText(bus.getLongitude() + "," + bus.getLatitude());
@@ -91,23 +92,12 @@ public class RouteDetailFragment extends Fragment {
         });
 
         closeBtn.setOnClickListener(click -> {
-            closePage();
+            BusRoute parentActivity = (BusRoute) getContext();
+            parentActivity.closePage(this);
         });
         return detailsView;
     }
 
-    /**
-     * closes this page depending whether it is a tablet or not
-     */
-    private void closePage() {
-        if (isTablet) {
-            getParentFragmentManager().beginTransaction().remove(this).commit();
-        } else {
-            RouteListFragment busRouteList = new RouteListFragment(parent);
-            getParentFragmentManager().beginTransaction().replace(R.id.br_fragmentRoute, busRouteList).commit();
-
-        }
-    }
 
     /**
      * this function creates a toast message with the given message

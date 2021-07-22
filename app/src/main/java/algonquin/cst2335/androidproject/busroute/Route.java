@@ -8,36 +8,40 @@ public class Route {
     /**
      * name of the station, or bus destination
      */
-        private String routeName;
+    private String routeName;
     /**
      * bus or station number
      */
     private String routeNumber;
-        private long id;
+    /**
+     * route id
+     */
+    private long id;
 
-        public Route(String name, String number) {
-            this.routeName = name;
-            this.routeNumber = number;
-        }
+    public Route(String name, String number) {
+        this.routeName = name;
+        this.routeNumber = number;
+    }
 
-        public Route(String name, String number, long id) {
-            this.routeName = name;
-            this.routeNumber = number;
-            this.id = id;
-        }
+    public Route(String name, String number, long id) {
+        this.routeName = name;
+        this.routeNumber = number;
+        this.id = id;
+    }
 
-        public String getRouteName() {
-            return routeName;
-        }
+    public String getRouteName() {
+        return routeName;
+    }
 
-        public String getRouteNumber() {
-            return routeNumber;
-        }
+    public String getRouteNumber() {
+        return routeNumber;
+    }
 
-        public void setId(long id) {
-            this.id = id;
-        }
-        public long getId() {
-            return id;
-        }
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
 }

@@ -92,4 +92,15 @@
         app:layout_constraintTop_toBottomOf="@+id/br_searched_number"
         app:layout_constraintVertical_bias="0.0" />
 
+    <Button
+        android:id="@+id/br_go_to_fav"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="fav" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

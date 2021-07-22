@@ -102,20 +102,27 @@ public class RouteListFragment extends Fragment {
             }
         });
         addToFavorite.setOnClickListener(e -> {
-            if (OCDB.check_route(searchedValue)) {
+            if (OCDB.check_route(getContext(),searchedValue)) {
                 Snackbar.make(addToFavorite, "Remove from favorites?", Snackbar.LENGTH_LONG)
                         .setAction("Yes", clk -> {
+                            OCDB.remove_route(getContext(),searchedValue);
+                            makeToast(searchedValue +" was removed from favorite list");
                         })
                         .show();
             } else {
                 Snackbar.make(addToFavorite, "Bus station was added to favorites", Snackbar.LENGTH_LONG)
                         .show();
-                OCDB.add_to_favorite(searchedValue, stationName);
+                OCDB.add_to_favorite(getContext(),searchedValue, stationName);
             }
         });
         if (!searchedValue.equals("")) {
             setUpViewList();
         }
+
+        busRouteLayout.findViewById(R.id.br_go_to_fav).setOnClickListener(e->{
+            BusRoute parentActivity = (BusRoute) getContext();
+            parentActivity.openFavoriteList();
+        });
         return busRouteLayout;
     }
 
@@ -203,8 +210,6 @@ public class RouteListFragment extends Fragment {
     private class RouteAdapter extends RecyclerView.Adapter<RouteView> {
         @Override
         public int getItemViewType(int position) {
-//            Route thisRow = allRoutes.get(position);
-//            return (int) thisRow.getId();
             return 1;
 
         }

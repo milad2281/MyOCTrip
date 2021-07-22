@@ -19,33 +19,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
+import java.util.LinkedList;
+
 import algonquin.cst2335.androidproject.R;
 /**
  * this class will create the fragment for the saved routes in the database
  */
 public class FavoriteListFragment extends Fragment {
     RecyclerView routeList;
-    ArrayList<Route> allRoutes = new ArrayList<>();
+    LinkedList<Route> allRoutes;
     RouteAdapter adt;
     SQLiteDatabase db;
-    Button searchBtn;
+    Button closeBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View favRouteLayout = inflater.inflate(R.layout.br_fav_route_layout,container,false);
-        //Creating Shared Preferences variable
-        SharedPreferences prefs = getContext().getSharedPreferences("BusRoute", Context.MODE_PRIVATE);
-        //Creating database object
-        OCDB opener = new OCDB(getContext());
-        db = opener.getWritableDatabase();
-
-        Cursor results = db.rawQuery("SELECT * FROM "+ OCDB.TABLE_NAME +";", null);
-        while(results.moveToNext()) {
-            long id = results.getInt(results.getColumnIndex("_id"));
-            String routeNum = results.getString(results.getColumnIndex(OCDB.col_routeNum));
-            String routeName = results.getString(results.getColumnIndex(OCDB.col_routeName));
-            allRoutes.add(new Route(routeName, routeNum, id));
-        }
+        View favRouteLayout = inflater.inflate(R.layout.br_fav_routes,container,false);
+        //Getting data from database
+        allRoutes = OCDB.getAllRoutes(getContext());
         // Initializing the recycle list
         adt = new RouteAdapter();
         routeList = favRouteLayout.findViewById(R.id.br_fav_route_list);
@@ -54,35 +45,13 @@ public class FavoriteListFragment extends Fragment {
 
         adt.notifyItemInserted(allRoutes.size()-1);
         //getting the widgets from xml files
-        searchBtn = favRouteLayout.findViewById(R.id.br_search_btn);
-        EditText searchedRouteNum = favRouteLayout.findViewById(R.id.br_search_text);
-        //Adding the last searched value from preferences
-        String searchedVal = prefs.getString("lastRouteSearched", "");
-        searchedRouteNum.setText(searchedVal);
-        //Click Listener for the search button
-        searchBtn.setOnClickListener(e->{
-            //Getting the searched value
-            String searchedValue = searchedRouteNum.getText().toString();
-            // Adding value to shared preferences
-            SharedPreferences.Editor  editor = prefs.edit();
-            editor.putString("lastRouteSearched", searchedValue);
-            editor.apply();
-
-            Route thisRoute = new Route( searchedValue, "63");
-            ContentValues newRow = new ContentValues();
-            newRow.put(OCDB.col_routeName, thisRoute.getRouteName());
-            newRow.put(OCDB.col_routeNum, thisRoute.getRouteNumber());
-            long newId = db.insert(OCDB.TABLE_NAME, OCDB.col_routeName, newRow);
-            thisRoute.setId(newId);
-            allRoutes.add( thisRoute );
-            searchedRouteNum.setText("");
-            adt.notifyItemInserted(allRoutes.size()-1);
+        closeBtn = favRouteLayout.findViewById(R.id.br_fav_close_btn);
+        //Click Listener for the button
+        closeBtn.setOnClickListener(e->{
+            BusRoute parentActivity = (BusRoute) getContext();
+            parentActivity.closePage(this);
         });
-//        deleteBtn.setOnClickListener(click->{
-//            ChatRoom parentActivity = (ChatRoom)getContext();
-//            parentActivity.notifyMessageDeleted(chosenMessage,chosenPosition);
-//            getParentFragmentManager().beginTransaction().remove(this).commit();
-//        });
+
         return favRouteLayout;
     }
 
@@ -92,37 +61,42 @@ public class FavoriteListFragment extends Fragment {
     private class RouteView extends RecyclerView.ViewHolder{
         TextView routeName;
         TextView routeNumber;
+        Button removeRoute;
         int position = -1;
 
         public RouteView(View itemView) {
             super(itemView);
-            itemView.setOnClickListener( e ->{
-                AlertDialog.Builder builder = new AlertDialog.Builder(  getContext() );
-                builder.setMessage("Do you want to delete route \"" +routeNumber.getText()+"\" from favorites?");
-                builder.setTitle("Question:");
-                builder.setPositiveButton("Yes",(dialog, cl )->{
-                    position = getAbsoluteAdapterPosition();
-                    Route removedMessage = allRoutes.get(position);
-                    allRoutes.remove(position);
-                    adt.notifyItemRemoved(position);
-                    db.delete(OCDB.TABLE_NAME, "_id=?",new String[] {Long.toString(removedMessage.getId())});
-                    Snackbar.make(routeName ,  "You deleted route #" + removedMessage.getRouteNumber(), Snackbar.LENGTH_LONG )
-                            .setAction("Undo", clk ->{
-                                allRoutes.add(position, removedMessage);
-                                adt.notifyItemRemoved(position);
-                                db.execSQL("INSERT INTO "+OCDB.TABLE_NAME + " Values('"
-                                        +removedMessage.getId()+"','"
-                                        +removedMessage.getRouteNumber()+"','"
-                                        +removedMessage.getRouteName() + "');");
-                            })
-                            .show();
-                });
-                builder.setNegativeButton("No" ,(dialog, cl)->{});
-                builder.create().show();
+            routeName = itemView.findViewById(R.id.br_fav_route_name);
+            routeNumber = itemView.findViewById(R.id.br_fav_route_number);
+            removeRoute= itemView.findViewById(R.id.br_fav_remove_btn);
+
+            removeRoute.setOnClickListener( e ->{
+//                AlertDialog.Builder builder = new AlertDialog.Builder(  getContext() );
+//                builder.setMessage("Do you want to delete route \"" +routeNumber.getText()+"\" from favorites?");
+//                builder.setTitle("Question:");
+//                builder.setPositiveButton("Yes",(dialog, cl )->{
+//                    position = getAbsoluteAdapterPosition();
+//                    Route removedRoute = allRoutes.get(position);
+//                    allRoutes.remove(position);
+//                    adt.notifyItemRemoved(position);
+//                    db.delete(OCDB.TABLE_NAME, "_id=?",new String[] {Long.toString(removedRoute.getId())});
+//                    Snackbar.make(routeName ,  "You deleted route #" + removedRoute.getRouteNumber(), Snackbar.LENGTH_LONG )
+//                            .setAction("Undo", clk ->{
+//                                allRoutes.add(position, removedRoute);
+//                                adt.notifyItemRemoved(position);
+//                                db.execSQL("INSERT INTO "+OCDB.TABLE_NAME + " Values('"
+//                                        +removedRoute.getId()+"','"
+//                                        +removedRoute.getRouteNumber()+"','"
+//                                        +removedRoute.getRouteName() + "');");
+//                            })
+//                            .show();
+//                });
+//                builder.setNegativeButton("No" ,(dialog, cl)->{});
+//                builder.create().show();
+                notifyMessageDeleted(allRoutes.get(position),position);
             });
 
-            routeName = itemView.findViewById(R.id.br_route_dest);
-            routeNumber = itemView.findViewById(R.id.br_route_id);
+
         }
         public  void  setPosition(int p ){position = p;}
     }
@@ -130,21 +104,18 @@ public class FavoriteListFragment extends Fragment {
     /** handles the deletion of a record*/
     public void notifyMessageDeleted(Route chosenMessage, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(  getContext() );
-        builder.setMessage("Do you want to delete the message: " +chosenMessage.getRouteName())
-                .setTitle("Question:")
+        builder.setMessage("Are you sure you want to delete " +chosenMessage.getRouteName()+" from favorite list?")
+                .setTitle("Remove Station?")
                 .setPositiveButton("Yes",(dialog, cl )->{
-                    Route removedMessage = allRoutes.get(position);
+                    Route removedRoute = allRoutes.get(position);
                     allRoutes.remove(position);
                     adt.notifyItemRemoved(position);
-                    db.delete(OCDB.TABLE_NAME, "_id=?",new String[] {Long.toString(removedMessage.getId())});
-                    Snackbar.make(searchBtn,  "You deleted message #" + position, Snackbar.LENGTH_SHORT )
+                    OCDB.remove_route(getContext(),removedRoute.getRouteNumber());
+                    Snackbar.make(closeBtn,  "You deleted " + removedRoute.getRouteNumber(), Snackbar.LENGTH_SHORT )
                             .setAction("Undo", clk ->{
-                                allRoutes.add(position, removedMessage);
+                                allRoutes.add(position, removedRoute);
                                 adt.notifyItemRemoved(position);
-                                db.execSQL("INSERT INTO "+OCDB.TABLE_NAME + " Values('"
-                                        +removedMessage.getId()+"','"
-                                        +removedMessage.getRouteName()+"','"
-                                        +removedMessage.getRouteNumber()+"');");
+                                OCDB.add_to_favorite(getContext(),removedRoute.getRouteNumber(),removedRoute.getRouteName());
                             })
                             .show();
                 });
@@ -155,15 +126,13 @@ public class FavoriteListFragment extends Fragment {
     private class RouteAdapter extends RecyclerView.Adapter<RouteView>{
         @Override
         public int getItemViewType(int position) {
-//            Route thisRow = allRoutes.get(position);
-//            return thisRow.getRouteNumber();
             return 0;
         }
 
         @Override
         public RouteView onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = getLayoutInflater();
-            View loadedRow = inflater.inflate(R.layout.br_route_layout, parent, false);
+            View loadedRow = inflater.inflate(R.layout.br_fav_route_layout, parent, false);
             return new RouteView(loadedRow);
         }
 
