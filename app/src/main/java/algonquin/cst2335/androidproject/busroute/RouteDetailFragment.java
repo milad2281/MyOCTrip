@@ -1,6 +1,8 @@
 package algonquin.cst2335.androidproject.busroute;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import algonquin.cst2335.androidproject.R;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -24,17 +29,22 @@ import java.util.concurrent.Executors;
 public class RouteDetailFragment extends Fragment {
     BusDetail bus;
     AppCompatActivity parent;
+    boolean isTablet;
+    String stationNumber;
 
-    public RouteDetailFragment(String stationNumber,Route route,AppCompatActivity parent) {
+    public RouteDetailFragment(String stationNumber, Route route, AppCompatActivity parent, boolean isTablet) {
+        this.stationNumber = stationNumber;
         this.bus = new BusDetail(stationNumber);
-        bus.setBusDest(route.getRouteName());
-        bus.setBusNumber(route.getRouteNumber());
+        this.bus.setBusDest(route.getRouteName());
+        this.bus.setBusNumber(route.getRouteNumber());
         this.parent = parent;
-
+        this.isTablet = isTablet;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View detailsView = inflater.inflate(R.layout.br_route_detail_layout,container,false);
+        View detailsView = inflater.inflate(R.layout.br_route_detail_layout, container, false);
         //Getting Widgets
         TextView stationNumberView = detailsView.findViewById(R.id.br_detail_station_number);
         TextView locationView = detailsView.findViewById(R.id.br_detail_location_ans);
@@ -57,27 +67,55 @@ public class RouteDetailFragment extends Fragment {
         Executor newThread = Executors.newSingleThreadExecutor();
         newThread.execute(() -> {
             //getting data
-        bus = RouteData.getBusDetails(bus,bus.getStationNumber(),bus.getBusNumber());
+            bus = RouteData.getBusDetails(bus, bus.getStationNumber(), bus.getBusNumber());
+
             parent.runOnUiThread(() -> {
-                stationNumberView.setText(bus.getStationNumber());
-                locationView.setText(bus.getLongitude() + "," + bus.getLatitude());
-                speedView.setText(bus.getSpeed());
-                startTimeView.setText(bus.getStartTime());
-                delayView.setText(bus.getDelay());
-                busNumberView.setText(bus.getBusNumber());
-                busDestView.setText(bus.getBusDest());
-                //removing dialog
-                dialog.hide();
+                if (!bus.getStationNumber().equals(this.stationNumber)) {
+                    makeToast(bus.getStationNumber());
+                    //removing dialog
+                    dialog.hide();
+                    closePage();
+                } else {
+                    stationNumberView.setText(bus.getStationNumber());
+                    locationView.setText(bus.getLongitude() + "," + bus.getLatitude());
+                    speedView.setText(bus.getSpeed());
+                    startTimeView.setText(bus.getStartTime());
+                    delayView.setText(bus.getDelay());
+                    busNumberView.setText(bus.getBusNumber());
+                    busDestView.setText(bus.getBusDest());
+                    //removing dialog
+                    dialog.hide();
+                }
             });
 
         });
 
-        closeBtn.setOnClickListener(click->{
-            getParentFragmentManager().beginTransaction().remove(this).commit();
+        closeBtn.setOnClickListener(click -> {
+            closePage();
         });
-
-
         return detailsView;
-
     }
+
+    /**
+     * closes this page depending whether it is a tablet or not
+     */
+    private void closePage() {
+        if (isTablet) {
+            getParentFragmentManager().beginTransaction().remove(this).commit();
+        } else {
+            RouteListFragment busRouteList = new RouteListFragment(parent);
+            getParentFragmentManager().beginTransaction().replace(R.id.br_fragmentRoute, busRouteList).commit();
+
+        }
+    }
+
+    /**
+     * this function creates a toast message with the given message
+     *
+     * @param message message to be shown
+     */
+    private void makeToast(String message) {
+        Toast.makeText(parent, message, Toast.LENGTH_LONG).show();
+    }
+
 }
