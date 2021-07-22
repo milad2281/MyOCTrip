@@ -102,20 +102,26 @@ public class RouteListFragment extends Fragment {
             }
         });
         addToFavorite.setOnClickListener(e -> {
-            if (OCDB.check_route(searchedValue)) {
+            if (OCDB.check_route(getContext(),searchedValue)) {
                 Snackbar.make(addToFavorite, "Remove from favorites?", Snackbar.LENGTH_LONG)
                         .setAction("Yes", clk -> {
+                            System.out.println( OCDB.remove_route(getContext(),searchedValue));
                         })
                         .show();
             } else {
                 Snackbar.make(addToFavorite, "Bus station was added to favorites", Snackbar.LENGTH_LONG)
                         .show();
-                OCDB.add_to_favorite(searchedValue, stationName);
+                OCDB.add_to_favorite(getContext(),searchedValue, stationName);
             }
         });
         if (!searchedValue.equals("")) {
             setUpViewList();
         }
+
+        busRouteLayout.findViewById(R.id.br_go_to_fav).setOnClickListener(e->{
+            BusRoute parentActivity = (BusRoute) getContext();
+            parentActivity.openFavoriteList();
+        });
         return busRouteLayout;
     }
 
