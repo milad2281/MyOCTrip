@@ -105,7 +105,8 @@ public class RouteListFragment extends Fragment {
             if (OCDB.check_route(getContext(),searchedValue)) {
                 Snackbar.make(addToFavorite, "Remove from favorites?", Snackbar.LENGTH_LONG)
                         .setAction("Yes", clk -> {
-                            System.out.println( OCDB.remove_route(getContext(),searchedValue));
+                            OCDB.remove_route(getContext(),searchedValue);
+                            makeToast(searchedValue +" was removed from favorite list");
                         })
                         .show();
             } else {
@@ -209,8 +210,6 @@ public class RouteListFragment extends Fragment {
     private class RouteAdapter extends RecyclerView.Adapter<RouteView> {
         @Override
         public int getItemViewType(int position) {
-//            Route thisRow = allRoutes.get(position);
-//            return (int) thisRow.getId();
             return 1;
 
         }

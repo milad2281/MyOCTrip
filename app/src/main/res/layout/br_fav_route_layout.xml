@@ -39,7 +39,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
         android:background="@color/br_light_red"
-        app:layout_constraintEnd_toEndOf="@+id/br_fav_remove_btn"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/br_fav_route_number"
         app:layout_constraintTop_toBottomOf="@+id/br_fav_remove_btn" />
 
@@ -48,10 +48,9 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="5dp"
         android:text="@string/br_remove"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/br_fav_route_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
