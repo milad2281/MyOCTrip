@@ -162,6 +162,8 @@ public class RouteData {
                 throw new IllegalStateException(context.getResources().getString(R.string.br_error_correct));
             }
             JSONObject routesObj = routeSummery.getJSONObject("Route");
+            JSONObject trips = null;
+            try{
             JSONArray routeArr = routesObj.getJSONArray("RouteDirection");
 
             JSONObject route = routeArr.getJSONObject(0);
@@ -175,7 +177,11 @@ public class RouteData {
             errorText = route.getString("Error");
             //check for any errors
             errorCheck(errorText);
-            JSONObject trips = route.getJSONObject("Trips");
+            trips = route.getJSONObject("Trips");
+            }catch (JSONException ex) {
+                JSONObject route = routesObj.getJSONObject("RouteDirection");
+                trips = route.getJSONObject("Trips");
+            }
             JSONArray trip = trips.getJSONArray("Trip");
             JSONObject nextBus = trip.getJSONObject(0);
 

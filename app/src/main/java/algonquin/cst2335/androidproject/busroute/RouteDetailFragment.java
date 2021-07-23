@@ -1,5 +1,6 @@
 package algonquin.cst2335.androidproject.busroute;
 
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -80,14 +81,19 @@ public class RouteDetailFragment extends Fragment {
                     parentActivity.closePage(this);
                 } else {
                     stationNumberView.setText(bus.getStationNumber());
-                    locationView.setText(bus.getLongitude() + "," + bus.getLatitude());
+                    locationView.setText(bus.getLatitude() + "," + bus.getLongitude());
                     if (!bus.getLongitude().equals("")){
                         openMap.setVisibility(View.VISIBLE);
                         openMap.setOnClickListener(e->{
-                            Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+bus.getLongitude() + "," + bus.getLatitude());
-                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                            mapIntent.setPackage("com.google.android.apps.maps");
-                            startActivity(mapIntent);
+                            try {
+                                Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + bus.getLatitude() + "," + bus.getLongitude());
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                startActivity(mapIntent);
+                            }catch (ActivityNotFoundException ex){
+                                ex.printStackTrace();
+                                makeToast(getString(R.string.br_need_maps));
+                            }
                         });
                     }
                     speedView.setText(bus.getSpeed());
