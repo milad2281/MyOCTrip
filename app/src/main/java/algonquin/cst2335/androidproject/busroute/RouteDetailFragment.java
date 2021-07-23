@@ -1,7 +1,10 @@
 package algonquin.cst2335.androidproject.busroute;
 
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -59,15 +62,15 @@ public class RouteDetailFragment extends Fragment {
         // Start a new Thread
         //Loading dialog
         AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setTitle("Getting Bus Information")
-                .setMessage("Retrieving bus information for " + bus.getBusNumber())
+                .setTitle(getString(R.string.br_get_bus_info))
+                .setMessage(getString(R.string.br_retrieve_bus_info) + bus.getBusNumber())
                 .setView(new ProgressBar(getContext()))
                 .show();
         //starting a new thread
         Executor newThread = Executors.newSingleThreadExecutor();
         newThread.execute(() -> {
             //getting data
-            bus = RouteData.getBusDetails(bus, bus.getStationNumber(), bus.getBusNumber());
+            bus = RouteData.getBusDetails(bus, bus.getStationNumber(), bus.getBusNumber(),getContext());
 
             parent.runOnUiThread(() -> {
                 if (!bus.getStationNumber().equals(this.stationNumber)) {
@@ -78,7 +81,21 @@ public class RouteDetailFragment extends Fragment {
                     parentActivity.closePage(this);
                 } else {
                     stationNumberView.setText(bus.getStationNumber());
-                    locationView.setText(bus.getLongitude() + "," + bus.getLatitude());
+                    locationView.setText(bus.getLatitude() + "," + bus.getLongitude());
+                    if (!bus.getLongitude().equals("")){
+                        openMap.setVisibility(View.VISIBLE);
+                        openMap.setOnClickListener(e->{
+                            try {
+                                Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + bus.getLatitude() + "," + bus.getLongitude());
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                startActivity(mapIntent);
+                            }catch (ActivityNotFoundException ex){
+                                ex.printStackTrace();
+                                makeToast(getString(R.string.br_need_maps));
+                            }
+                        });
+                    }
                     speedView.setText(bus.getSpeed());
                     startTimeView.setText(bus.getStartTime());
                     delayView.setText(bus.getDelay());

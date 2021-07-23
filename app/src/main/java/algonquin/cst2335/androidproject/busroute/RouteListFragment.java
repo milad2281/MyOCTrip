@@ -95,34 +95,32 @@ public class RouteListFragment extends Fragment {
                     //Get Data and Set Up view list
                     setUpViewList();
                 } else {
-                    makeToast("Not a valid station");
+                    makeToast(getString(R.string.br_you_deleted));
                 }
             } else {
-                makeToast("Field can not be empty");
+                makeToast(getString(R.string.br_field_not_empty));
             }
         });
         addToFavorite.setOnClickListener(e -> {
             if (OCDB.check_route(getContext(),searchedValue)) {
-                Snackbar.make(addToFavorite, "Remove from favorites?", Snackbar.LENGTH_LONG)
-                        .setAction("Yes", clk -> {
+                Snackbar.make(addToFavorite, getString(R.string.br_remove_from_fav), Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.br_yes), clk -> {
                             OCDB.remove_route(getContext(),searchedValue);
-                            makeToast(searchedValue +" was removed from favorite list");
+                            makeToast(searchedValue +getString(R.string.br_was_removed_fav));
+                            addToFavorite.setBackgroundResource(android.R.drawable.star_off);
                         })
                         .show();
             } else {
-                Snackbar.make(addToFavorite, "Bus station was added to favorites", Snackbar.LENGTH_LONG)
+                Snackbar.make(addToFavorite,getString(R.string.br_bus_added_fav) , Snackbar.LENGTH_LONG)
                         .show();
                 OCDB.add_to_favorite(getContext(),searchedValue, stationName);
+                addToFavorite.setBackgroundResource(android.R.drawable.star_on);
             }
         });
         if (!searchedValue.equals("")) {
             setUpViewList();
         }
 
-        busRouteLayout.findViewById(R.id.br_go_to_fav).setOnClickListener(e->{
-            BusRoute parentActivity = (BusRoute) getContext();
-            parentActivity.openFavoriteList();
-        });
         return busRouteLayout;
     }
 
@@ -143,20 +141,24 @@ public class RouteListFragment extends Fragment {
         allRoutes.clear();
         //Loading dialog
         AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setTitle("Getting Bus Routes")
-                .setMessage("Retrieving bus route information for station " + searchedValue)
+                .setTitle(getString(R.string.br_getting_bus_routes))
+                .setMessage(getString(R.string.br_retrieve_route_info) + searchedValue)
                 .setView(new ProgressBar(getContext()))
                 .show();
         //starting a new thread
         Executor newThread = Executors.newSingleThreadExecutor();
         newThread.execute(() -> {
             //getting data
-            LinkedList<Route> gottenRoutes = RouteData.getAllRoutes(searchedValue);
+            LinkedList<Route> gottenRoutes = RouteData.getAllRoutes(searchedValue,getContext());
             Route station = gottenRoutes.pollFirst();
             //checking for any errors
             if (!station.getRouteNumber().equals("-1")) {
                 parent.runOnUiThread(() -> {
 
+                    if (OCDB.check_route(getContext(),searchedValue))
+                        addToFavorite.setBackgroundResource(android.R.drawable.star_on);
+                    else
+                        addToFavorite.setBackgroundResource(android.R.drawable.star_off);
                     addToFavorite.setVisibility(View.VISIBLE);
                     stationNumberView.setText(station.getRouteNumber());
                     stationNumberView.setVisibility(View.VISIBLE);

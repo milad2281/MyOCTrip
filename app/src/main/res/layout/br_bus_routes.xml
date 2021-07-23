@@ -34,16 +34,17 @@
 
     <Button
         android:id="@+id/br_fav_btn"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="53dp"
-        android:layout_height="47dp"
+        style="@android:style/Widget.Material.Light.Button.Small"
+        android:layout_width="63dp"
+        android:layout_height="50dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="24dp"
-        android:text="save"
-        android:textSize="6sp"
-        android:visibility="invisible"
+        android:background="@android:drawable/star_off"
+        android:textSize="14sp"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        tools:visibility="invisible" />
 
     <TextView
         android:id="@+id/br_searched_desc"
@@ -91,16 +92,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/br_searched_number"
         app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/br_go_to_fav"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="fav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

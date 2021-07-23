@@ -1,8 +1,11 @@
 package algonquin.cst2335.androidproject.busroute;
 
+import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +26,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import algonquin.cst2335.androidproject.R;
+
 /**
  * this static class will handle all the connections to OC APIs
  * These include all the API calls to different services which are:<br>
@@ -35,6 +40,7 @@ public class RouteData {
     private static StringBuilder routeUrl;
     private static StringBuilder tripUrl;
     private static final String tripGapText = "&routeNo=";
+    private static Context context;
 
     //Building Urls
 
@@ -59,11 +65,13 @@ public class RouteData {
      * Returns a list of bus numbers passing through the given station route number
      * First route is the station name and the station number
      *
+     * @param con      context of the layout
      * @param routeNum bus station route number
      * @return list of all buses passing through this station
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static LinkedList<Route> getAllRoutes(String routeNum) {
+    public static LinkedList<Route> getAllRoutes(String routeNum, Context con) {
+        context = con;
         LinkedList<Route> allRoutes = new LinkedList<>();
         String stringUrl = routeUrl.toString() + routeNum;
         try {
@@ -84,11 +92,20 @@ public class RouteData {
 
             allRoutes.add(new Route(routeSummery.getString("StopDescription"), routeSummery.getString("StopNo")));
             JSONObject routesObj = routeSummery.getJSONObject("Routes");
-            JSONArray routeArr = routesObj.getJSONArray("Route");
-            //getting all routes
-            int len = routeArr.length();
-            for (int i = 0; i < len; i++) {
-                JSONObject route = routeArr.getJSONObject(i);
+            //handling situation of only one bus for station
+            try {
+                JSONArray routeArr = routesObj.getJSONArray("Route");
+                //getting all routes
+                int len = routeArr.length();
+                for (int i = 0; i < len; i++) {
+                    JSONObject route = routeArr.getJSONObject(i);
+                    String busNumber = route.getString("RouteNo");
+                    String busDest = route.getString("RouteHeading");
+                    Route newRoute = new Route(busDest, busNumber);
+                    allRoutes.add(newRoute);
+                }
+            } catch (JSONException e) {
+                JSONObject route = routesObj.getJSONObject("Route");
                 String busNumber = route.getString("RouteNo");
                 String busDest = route.getString("RouteHeading");
                 Route newRoute = new Route(busDest, busNumber);
@@ -96,19 +113,19 @@ public class RouteData {
             }
 
         } catch (IllegalStateException e) {
-            return createRouteError(e.getMessage() + ".\nPlease try again.");
+            return createRouteError(e.getMessage() + context.getResources().getString(R.string.br_try_again));
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            return createRouteError("There was an error getting to server.\nPlease try again.");
+            return createRouteError(context.getResources().getString(R.string.br_error_connect));
         } catch (JSONException e) {
             e.printStackTrace();
-            return createRouteError("Currently there is no online data.\nPlease try again.");
+            return createRouteError(context.getResources().getString(R.string.br_error_online));
         } catch (IOException e) {
             e.printStackTrace();
-            return createRouteError("There was an error connecting to server.\nPlease try again.");
+            return createRouteError(context.getResources().getString(R.string.br_error_read));
         }
         if (allRoutes.size() < 1) {
-            return createRouteError("There was an error getting data.\nPlease try again.");
+            return createRouteError(context.getResources().getString(R.string.br_error_get));
         }
         return allRoutes;
     }
@@ -119,10 +136,12 @@ public class RouteData {
      * @param bus        the bus object which the details will be added to
      * @param stationNum the station number
      * @param busNum     the bus number
+     * @param con        context of the layout
      * @return a associative list of bus details
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static BusDetail getBusDetails(BusDetail bus, String stationNum, String busNum) {
+    public static BusDetail getBusDetails(BusDetail bus, String stationNum, String busNum, Context con) {
+        context = con;
         String stringUrl = tripUrl.toString() + stationNum + tripGapText + busNum;
         try {
             URL url = new URL(stringUrl);
@@ -139,10 +158,12 @@ public class RouteData {
             String errorText = routeSummery.getString("Error");
             //check for any errors
             errorCheck(errorText);
-            if(!bus.getStationNumber().equals(routeSummery.getString("StopNo"))){
-                throw new IllegalStateException("Could not get the correct route.\nPlease try again.");
+            if (!bus.getStationNumber().equals(routeSummery.getString("StopNo"))) {
+                throw new IllegalStateException(context.getResources().getString(R.string.br_error_correct));
             }
             JSONObject routesObj = routeSummery.getJSONObject("Route");
+            JSONObject trips = null;
+            try{
             JSONArray routeArr = routesObj.getJSONArray("RouteDirection");
 
             JSONObject route = routeArr.getJSONObject(0);
@@ -156,7 +177,11 @@ public class RouteData {
             errorText = route.getString("Error");
             //check for any errors
             errorCheck(errorText);
-            JSONObject trips = route.getJSONObject("Trips");
+            trips = route.getJSONObject("Trips");
+            }catch (JSONException ex) {
+                JSONObject route = routesObj.getJSONObject("RouteDirection");
+                trips = route.getJSONObject("Trips");
+            }
             JSONArray trip = trips.getJSONArray("Trip");
             JSONObject nextBus = trip.getJSONObject(0);
 
@@ -167,16 +192,16 @@ public class RouteData {
             bus.setStartTime(nextBus.getString("TripStartTime"));
 
         } catch (IllegalStateException e) {
-            bus.setStationNumber(e.getMessage() + ".\nPlease try again.");
+            bus.setStationNumber(e.getMessage() + context.getResources().getString(R.string.br_try_again));
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            bus.setStationNumber("There was some error connecting to server.\nPlease try again.");
+            bus.setStationNumber(context.getResources().getString(R.string.br_error_connect));
         } catch (JSONException e) {
             e.printStackTrace();
-            bus.setStationNumber("Currently there is no online data.\nMaybe try again later.");
+            bus.setStationNumber(context.getResources().getString(R.string.br_error_online));
         } catch (IOException e) {
             e.printStackTrace();
-            bus.setStationNumber("There was some error reading data.\nPlease try again.");
+            bus.setStationNumber(context.getResources().getString(R.string.br_error_read));
         }
 
         return bus;
@@ -184,6 +209,7 @@ public class RouteData {
 
     /**
      * create a error message of return type with given text
+     *
      * @param error error message text
      * @return error object to be returned
      */
@@ -195,6 +221,7 @@ public class RouteData {
 
     /**
      * checks an error code based on API's documentation, throws exception with the error message
+     *
      * @param errorText the text to be checked
      * @throws IllegalStateException if there was an error
      */
@@ -203,19 +230,19 @@ public class RouteData {
         if (!errorText.equals("")) {
             switch (errorText) {
                 case "10":
-                    errorText = "Invalid stop number";
+                    errorText = context.getResources().getString(R.string.br_error_10);
                     break;
                 case "11":
-                    errorText = "Invalid route number";
+                    errorText = context.getResources().getString(R.string.br_error_11);
                     break;
                 case "12":
-                    errorText = "Stop does not service route at this time";
+                    errorText = context.getResources().getString(R.string.br_error_12);
                     break;
                 case "13":
-                    errorText = "No routes available at stop at any time";
+                    errorText = context.getResources().getString(R.string.br_error_13);
                     break;
                 default:
-                    errorText = "Unable to query data source";
+                    errorText = context.getResources().getString(R.string.br_error_other);
             }
             throw new IllegalStateException(errorText);
         }

@@ -12,10 +12,44 @@
     <string name="br_fav_routes">My Favorite Routes</string>
     <string name="br_remove">Remove</string>
     <string name="br_close">Close</string>
+    <string name="br_open">Open</string>
+    <string name="br_help">Help</string>
+    <string name="br_help_about_title">"Help and About"</string>
+    <string name="br_check_website">Check Website</string>
+    <string name="br_sure_delete">"Are you sure you want to delete "</string>
+    <string name="br_delete_from">" from favorite list?"</string>
+    <string name="br_remove_station">Remove Station?</string>
+    <string name="br_yes">Yes</string>
+    <string name="br_undo">Undo</string>
+    <string name="br_no">No</string>
+    <string name="br_you_deleted">"You deleted "</string>
+    <string name="br_get_bus_info">Getting Bus Information</string>
+    <string name="br_retrieve_bus_info">"Retrieving bus information for "</string>
+    <string name="not_valid_station">Not a valid station</string>
+    <string name="br_field_not_empty">Field can not be empty</string>
+    <string name="br_remove_from_fav">Remove from favorites?</string>
+    <string name="br_was_removed_fav">" was removed from favorite list"</string>
+    <string name="br_bus_added_fav">Bus station was added to favorites</string>
+    <string name="br_getting_bus_routes">Getting Bus Routes</string>
+    <string name="br_retrieve_route_info">"Retrieving bus route information for station "</string>
+    <string name="br_error_10">Invalid stop number</string>
+    <string name="br_error_11">Invalid route number</string>
+    <string name="br_error_12">Stop does not service route at this time</string>
+    <string name="br_error_13">No routes available at stop at any time</string>
+    <string name="br_error_other">Unable to query data source</string>
+    <string name="br_error_connect">There was some error connecting to server.\nPlease try again.</string>
+    <string name="br_try_again">.\nPlease try again.</string>
+    <string name="br_error_online">Currently there is no online data.\nMaybe try again later.</string>
+    <string name="br_error_read">There was some error reading data.\nPlease try again.</string>
+    <string name="br_error_correct">Could not get the correct route.\nPlease try again.</string>
+    <string name="br_error_get">There was an error getting data.\nPlease try again.</string>
+    <string name="br_help_about_text">My OC Trip     This application allows you to get all the buses passing through a pass station.     \nEnter the OCTranspo 4 digit station number in the search bar. You can see all the buses passing through there and their destination.     \nFor more information about the buses, simply click on them. If data available you will be redirected to another page with details about the bus such as time of arrival and current location of the bus.     \nYou can add you favorite stations to your favorite list for easier access.      \n\nYou can contact us by visiting the developers website.     \nCopright Milad Mobini 2021 EcoCyrus</string>
+    <string name="br_need_maps">You need google maps to run this feature</string>
+
     <!--  Electric Car   -->
     <string name="ec_app_name">Electric Car Charging Station finder</string>
     <!--  Movie Information  -->
-    <string name="mi_app_name"> Movie Information</string>
+    <string name="mi_app_name">Movie Information</string>
     <!-- Soccer Games   -->
     <string name="sg_app_name">Soccer games api</string>
 
