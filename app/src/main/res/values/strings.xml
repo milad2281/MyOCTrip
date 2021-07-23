@@ -48,7 +48,7 @@
     <!--  Electric Car   -->
     <string name="ec_app_name">Electric Car Charging Station finder</string>
     <!--  Movie Information  -->
-    <string name="mi_app_name"> Movie Information</string>
+    <string name="mi_app_name">Movie Information</string>
     <!-- Soccer Games   -->
     <string name="sg_app_name">Soccer games api</string>
 
