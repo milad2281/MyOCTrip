@@ -1,13 +1,16 @@
 package algonquin.cst2335.androidproject.busroute;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import algonquin.cst2335.androidproject.MainActivity;
 import algonquin.cst2335.androidproject.R;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -15,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * main class that will load the Bus Route application
@@ -22,7 +26,6 @@ import com.google.android.material.navigation.NavigationView;
 public class BusRoute extends AppCompatActivity {
     RouteListFragment busRouteList;
     boolean isTablet;
-    Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class BusRoute extends AppCompatActivity {
         //setting up the tool bar
         Toolbar myToolbar = findViewById(R.id.br_toolbar);
         setSupportActionBar(myToolbar);
-
+        //setting up drawer
         DrawerLayout drawer = findViewById(R.id.br_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.br_open, R.string.br_close);
         drawer.addDrawerListener(toggle);
@@ -41,7 +44,17 @@ public class BusRoute extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.popout_menu);
         navigationView.setNavigationItemSelectedListener(item->{
-            onOptionsItemSelected(item);
+            switch (item.getItemId()){
+                case R.id.br_app_sg:
+                    startActivity(new Intent( this, BusRoute.class));
+                    break;
+                case R.id.br_app_mi:
+                    startActivity(new Intent( this, BusRoute.class));
+                    break;
+                case R.id.br_app_ec:
+                    startActivity(new Intent( this, BusRoute.class));
+                    break;
+            }
             drawer.closeDrawer(GravityCompat.START);
             return false;
         });
@@ -100,7 +113,18 @@ public class BusRoute extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 1:
+            case R.id.br_menu_help:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(getString(R.string.br_help_about_text))
+                        .setTitle(getString(R.string.br_help_about_title))
+                        .setPositiveButton(getString(R.string.br_check_website),(dialog, cl )->{
+
+                        });
+                builder.setNegativeButton(getString(R.string.br_close) ,(dialog, cl)->{});
+                builder.create().show();
+                break;
+            case R.id.br_menu_favorite:
+                this.openFavoriteList();
                 break;
         }
         return false;

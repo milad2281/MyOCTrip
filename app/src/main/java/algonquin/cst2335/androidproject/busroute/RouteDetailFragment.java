@@ -59,15 +59,15 @@ public class RouteDetailFragment extends Fragment {
         // Start a new Thread
         //Loading dialog
         AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setTitle("Getting Bus Information")
-                .setMessage("Retrieving bus information for " + bus.getBusNumber())
+                .setTitle(getString(R.string.br_get_bus_info))
+                .setMessage(getString(R.string.br_retrieve_bus_info) + bus.getBusNumber())
                 .setView(new ProgressBar(getContext()))
                 .show();
         //starting a new thread
         Executor newThread = Executors.newSingleThreadExecutor();
         newThread.execute(() -> {
             //getting data
-            bus = RouteData.getBusDetails(bus, bus.getStationNumber(), bus.getBusNumber());
+            bus = RouteData.getBusDetails(bus, bus.getStationNumber(), bus.getBusNumber(),getContext());
 
             parent.runOnUiThread(() -> {
                 if (!bus.getStationNumber().equals(this.stationNumber)) {

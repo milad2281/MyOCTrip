@@ -34,6 +34,6 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/br_pop_out_header"
-            app:menu="@menu/br_main_menu" />
+            app:menu="@menu/br_apps_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
 </LinearLayout>

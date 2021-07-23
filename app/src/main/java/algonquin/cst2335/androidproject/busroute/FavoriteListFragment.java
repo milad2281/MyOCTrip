@@ -29,7 +29,6 @@ public class FavoriteListFragment extends Fragment {
     RecyclerView routeList;
     LinkedList<Route> allRoutes;
     RouteAdapter adt;
-    SQLiteDatabase db;
     Button closeBtn;
 
     @Override
@@ -82,22 +81,22 @@ public class FavoriteListFragment extends Fragment {
     /** handles the deletion of a record*/
     public void notifyMessageDeleted(Route chosenMessage, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(  getContext() );
-        builder.setMessage("Are you sure you want to delete " +chosenMessage.getRouteName()+" from favorite list?")
-                .setTitle("Remove Station?")
-                .setPositiveButton("Yes",(dialog, cl )->{
+        builder.setMessage(getString(R.string.br_sure_delete) +chosenMessage.getRouteName()+getString(R.string.br_delete_from))
+                .setTitle(getString(R.string.br_remove_station))
+                .setPositiveButton(getString(R.string.br_yes),(dialog, cl )->{
                     Route removedRoute = allRoutes.get(position);
                     allRoutes.remove(position);
                     adt.notifyItemRemoved(position);
                     OCDB.remove_route(getContext(),removedRoute.getRouteNumber());
-                    Snackbar.make(closeBtn,  "You deleted " + removedRoute.getRouteNumber(), Snackbar.LENGTH_SHORT )
-                            .setAction("Undo", clk ->{
+                    Snackbar.make(closeBtn,  getString(R.string.br_you_deleted)+ removedRoute.getRouteNumber(), Snackbar.LENGTH_SHORT )
+                            .setAction(getString(R.string.br_undo), clk ->{
                                 allRoutes.add(position, removedRoute);
                                 adt.notifyItemRemoved(position);
                                 OCDB.add_to_favorite(getContext(),removedRoute.getRouteNumber(),removedRoute.getRouteName());
                             })
                             .show();
                 });
-        builder.setNegativeButton("No" ,(dialog, cl)->{});
+        builder.setNegativeButton(getString(R.string.br_no) ,(dialog, cl)->{});
         builder.create().show();
     }
 
