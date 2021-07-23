@@ -43,4 +43,5 @@
     <string name="br_error_read">Une erreur s\'est produite lors de la lecture des données.\\n Veuillez réessayer.</string>
     <string name="br_error_correct">Impossible d\'obtenir le bon itinéraire.\\nVeuillez réessayer.</string>
     <string name="br_error_get">Une erreur s\'est produite lors de l\'obtention des données.\\nVeuillez réessayer.</string>
+    <string name="br_help_about_text">My OC Trip Cette application vous permet d\'obtenir tous les bus passant par une station de passe. Entrez le numéro de station à 4 chiffres d\'OCTranspo dans la barre de recherche. Vous pouvez voir tous les bus qui y passent et leur destination. Pour plus d\'informations sur les bus, cliquez simplement dessus. Si des données sont disponibles, vous serez redirigé vers une autre page avec des détails sur le bus tels que l\'heure d\'arrivée et l\'emplacement actuel du bus. Vous pouvez ajouter vos stations préférées à votre liste de favoris pour un accès plus facile.  Vous pouvez nous contacter en visitant le site Web des développeurs. Droit d\'auteur Milad Mobini 2021 EcoCyrus</string>
 </resources>

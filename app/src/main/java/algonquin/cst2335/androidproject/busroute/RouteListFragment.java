@@ -157,6 +157,8 @@ public class RouteListFragment extends Fragment {
 
                     if (OCDB.check_route(getContext(),searchedValue))
                         addToFavorite.setBackgroundResource(android.R.drawable.star_on);
+                    else
+                        addToFavorite.setBackgroundResource(android.R.drawable.star_off);
                     addToFavorite.setVisibility(View.VISIBLE);
                     stationNumberView.setText(station.getRouteNumber());
                     stationNumberView.setVisibility(View.VISIBLE);

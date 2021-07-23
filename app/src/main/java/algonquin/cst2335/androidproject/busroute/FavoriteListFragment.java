@@ -47,8 +47,7 @@ public class FavoriteListFragment extends Fragment {
         closeBtn = favRouteLayout.findViewById(R.id.br_fav_close_btn);
         //Click Listener for the button
         closeBtn.setOnClickListener(e->{
-            BusRoute parentActivity = (BusRoute) getContext();
-            parentActivity.closePage(this);
+            closePage();
         });
 
         return favRouteLayout;
@@ -71,6 +70,14 @@ public class FavoriteListFragment extends Fragment {
 
             removeRoute.setOnClickListener( e ->{
                 notifyMessageDeleted(allRoutes.get(position),position);
+            });
+            itemView.setOnClickListener(e->{
+                // Adding value to shared preferences
+                SharedPreferences prefs = getContext().getSharedPreferences("BusRoute", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("lastRouteSearched", routeNumber.getText().toString());
+                editor.apply();
+                closePage();
             });
 
 
@@ -126,4 +133,8 @@ public class FavoriteListFragment extends Fragment {
         }
     }
 
+    private void closePage(){
+        BusRoute parentActivity = (BusRoute) getContext();
+        parentActivity.closePage(this);
+    }
 }

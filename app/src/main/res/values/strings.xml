@@ -14,7 +14,6 @@
     <string name="br_close">Close</string>
     <string name="br_open">Open</string>
     <string name="br_help">Help</string>
-    <string name="br_help_about_text">very long text here</string>
     <string name="br_help_about_title">"Help and About"</string>
     <string name="br_check_website">Check Website</string>
     <string name="br_sure_delete">"Are you sure you want to delete "</string>
@@ -44,6 +43,7 @@
     <string name="br_error_read">There was some error reading data.\nPlease try again.</string>
     <string name="br_error_correct">Could not get the correct route.\nPlease try again.</string>
     <string name="br_error_get">There was an error getting data.\nPlease try again.</string>
+    <string name="br_help_about_text">My OC Trip     This application allows you to get all the buses passing through a pass station.     \nEnter the OCTranspo 4 digit station number in the search bar. You can see all the buses passing through there and their destination.     \nFor more information about the buses, simply click on them. If data available you will be redirected to another page with details about the bus such as time of arrival and current location of the bus.     \nYou can add you favorite stations to your favorite list for easier access.      \n\nYou can contact us by visiting the developers website.     \nCopright Milad Mobini 2021 EcoCyrus</string>
 
     <!--  Electric Car   -->
     <string name="ec_app_name">Electric Car Charging Station finder</string>

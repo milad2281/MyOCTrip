@@ -1,6 +1,7 @@
 package algonquin.cst2335.androidproject.busroute;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -118,9 +119,10 @@ public class BusRoute extends AppCompatActivity {
                 builder.setMessage(getString(R.string.br_help_about_text))
                         .setTitle(getString(R.string.br_help_about_title))
                         .setPositiveButton(getString(R.string.br_check_website),(dialog, cl )->{
-
+                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.ecocyrus.com/"));
+                            startActivity(myIntent);
                         });
-                builder.setNegativeButton(getString(R.string.br_close) ,(dialog, cl)->{});
+                builder.setNegativeButton(getString(R.string.br_close),(dialog, cl)->{});
                 builder.create().show();
                 break;
             case R.id.br_menu_favorite:
