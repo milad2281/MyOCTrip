@@ -71,28 +71,6 @@ public class FavoriteListFragment extends Fragment {
             removeRoute= itemView.findViewById(R.id.br_fav_remove_btn);
 
             removeRoute.setOnClickListener( e ->{
-//                AlertDialog.Builder builder = new AlertDialog.Builder(  getContext() );
-//                builder.setMessage("Do you want to delete route \"" +routeNumber.getText()+"\" from favorites?");
-//                builder.setTitle("Question:");
-//                builder.setPositiveButton("Yes",(dialog, cl )->{
-//                    position = getAbsoluteAdapterPosition();
-//                    Route removedRoute = allRoutes.get(position);
-//                    allRoutes.remove(position);
-//                    adt.notifyItemRemoved(position);
-//                    db.delete(OCDB.TABLE_NAME, "_id=?",new String[] {Long.toString(removedRoute.getId())});
-//                    Snackbar.make(routeName ,  "You deleted route #" + removedRoute.getRouteNumber(), Snackbar.LENGTH_LONG )
-//                            .setAction("Undo", clk ->{
-//                                allRoutes.add(position, removedRoute);
-//                                adt.notifyItemRemoved(position);
-//                                db.execSQL("INSERT INTO "+OCDB.TABLE_NAME + " Values('"
-//                                        +removedRoute.getId()+"','"
-//                                        +removedRoute.getRouteNumber()+"','"
-//                                        +removedRoute.getRouteName() + "');");
-//                            })
-//                            .show();
-//                });
-//                builder.setNegativeButton("No" ,(dialog, cl)->{});
-//                builder.create().show();
                 notifyMessageDeleted(allRoutes.get(position),position);
             });
 

@@ -12,6 +12,8 @@
     <string name="br_fav_routes">My Favorite Routes</string>
     <string name="br_remove">Remove</string>
     <string name="br_close">Close</string>
+    <string name="br_open">Open</string>
+    <string name="br_help">Help</string>
     <!--  Electric Car   -->
     <string name="ec_app_name">Electric Car Charging Station finder</string>
     <!--  Movie Information  -->
