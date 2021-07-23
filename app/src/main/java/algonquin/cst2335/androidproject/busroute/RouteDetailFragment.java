@@ -2,6 +2,8 @@ package algonquin.cst2335.androidproject.busroute;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -79,6 +81,15 @@ public class RouteDetailFragment extends Fragment {
                 } else {
                     stationNumberView.setText(bus.getStationNumber());
                     locationView.setText(bus.getLongitude() + "," + bus.getLatitude());
+                    if (!bus.getLongitude().equals("")){
+                        openMap.setVisibility(View.VISIBLE);
+                        openMap.setOnClickListener(e->{
+                            Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+bus.getLongitude() + "," + bus.getLatitude());
+                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                            mapIntent.setPackage("com.google.android.apps.maps");
+                            startActivity(mapIntent);
+                        });
+                    }
                     speedView.setText(bus.getSpeed());
                     startTimeView.setText(bus.getStartTime());
                     delayView.setText(bus.getDelay());

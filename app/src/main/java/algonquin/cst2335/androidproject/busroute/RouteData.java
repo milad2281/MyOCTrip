@@ -65,12 +65,12 @@ public class RouteData {
      * Returns a list of bus numbers passing through the given station route number
      * First route is the station name and the station number
      *
-     * @param con context of the layout
+     * @param con      context of the layout
      * @param routeNum bus station route number
      * @return list of all buses passing through this station
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static LinkedList<Route> getAllRoutes(String routeNum,Context con) {
+    public static LinkedList<Route> getAllRoutes(String routeNum, Context con) {
         context = con;
         LinkedList<Route> allRoutes = new LinkedList<>();
         String stringUrl = routeUrl.toString() + routeNum;
@@ -92,11 +92,20 @@ public class RouteData {
 
             allRoutes.add(new Route(routeSummery.getString("StopDescription"), routeSummery.getString("StopNo")));
             JSONObject routesObj = routeSummery.getJSONObject("Routes");
-            JSONArray routeArr = routesObj.getJSONArray("Route");
-            //getting all routes
-            int len = routeArr.length();
-            for (int i = 0; i < len; i++) {
-                JSONObject route = routeArr.getJSONObject(i);
+            //handling situation of only one bus for station
+            try {
+                JSONArray routeArr = routesObj.getJSONArray("Route");
+                //getting all routes
+                int len = routeArr.length();
+                for (int i = 0; i < len; i++) {
+                    JSONObject route = routeArr.getJSONObject(i);
+                    String busNumber = route.getString("RouteNo");
+                    String busDest = route.getString("RouteHeading");
+                    Route newRoute = new Route(busDest, busNumber);
+                    allRoutes.add(newRoute);
+                }
+            } catch (JSONException e) {
+                JSONObject route = routesObj.getJSONObject("Route");
                 String busNumber = route.getString("RouteNo");
                 String busDest = route.getString("RouteHeading");
                 Route newRoute = new Route(busDest, busNumber);
@@ -127,11 +136,11 @@ public class RouteData {
      * @param bus        the bus object which the details will be added to
      * @param stationNum the station number
      * @param busNum     the bus number
-     * @param con context of the layout
+     * @param con        context of the layout
      * @return a associative list of bus details
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static BusDetail getBusDetails(BusDetail bus, String stationNum, String busNum,Context con) {
+    public static BusDetail getBusDetails(BusDetail bus, String stationNum, String busNum, Context con) {
         context = con;
         String stringUrl = tripUrl.toString() + stationNum + tripGapText + busNum;
         try {
@@ -149,7 +158,7 @@ public class RouteData {
             String errorText = routeSummery.getString("Error");
             //check for any errors
             errorCheck(errorText);
-            if(!bus.getStationNumber().equals(routeSummery.getString("StopNo"))){
+            if (!bus.getStationNumber().equals(routeSummery.getString("StopNo"))) {
                 throw new IllegalStateException(context.getResources().getString(R.string.br_error_correct));
             }
             JSONObject routesObj = routeSummery.getJSONObject("Route");
@@ -194,6 +203,7 @@ public class RouteData {
 
     /**
      * create a error message of return type with given text
+     *
      * @param error error message text
      * @return error object to be returned
      */
@@ -205,6 +215,7 @@ public class RouteData {
 
     /**
      * checks an error code based on API's documentation, throws exception with the error message
+     *
      * @param errorText the text to be checked
      * @throws IllegalStateException if there was an error
      */
