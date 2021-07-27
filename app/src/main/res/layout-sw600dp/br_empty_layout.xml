@@ -10,7 +10,7 @@
         android:id="@+id/br_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/br_tool_bar"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
@@ -28,14 +28,14 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_height="match_parent"
                 android:id="@+id/br_fragmentRoute"
-                android:background= "@color/white"
+                android:background= "@color/br_main_background"
                 android:layout_width="500dp" />
 
             <FrameLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_height="match_parent"
                 android:id="@+id/br_detailsRoute"
-                android:background= "@color/br_light_blue"
+                android:background= "@color/br_secondary_background"
                 android:layout_width="match_parent" />
         </LinearLayout>
 

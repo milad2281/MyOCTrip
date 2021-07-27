@@ -15,4 +15,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <!--Bus Route-->
+    <style name="BR_Button.color" parent="ThemeOverlay.AppCompat">
+        <item name="colorPrimary">@color/br_main_btn</item>
+    </style>
 </resources>
