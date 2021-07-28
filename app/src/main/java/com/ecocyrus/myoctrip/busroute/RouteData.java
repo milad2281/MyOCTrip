@@ -1,11 +1,9 @@
-package algonquin.cst2335.androidproject.busroute;
+package com.ecocyrus.myoctrip.busroute;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,13 +18,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
-import algonquin.cst2335.androidproject.R;
+import com.ecocyrus.myoctrip.R;
 
 /**
  * this static class will handle all the connections to OC APIs
@@ -86,11 +81,11 @@ public class RouteData {
             JSONObject routeInformation = new JSONObject(text);
 
             JSONObject routeSummery = routeInformation.getJSONObject("GetRouteSummaryForStopResult");
-            String errorText = routeSummery.getString("Error");
+            String errorText = routeSummery.getString("error");
             //check for any errors
             errorCheck(errorText);
 
-            allRoutes.add(new Route(routeSummery.getString("StopDescription"), routeSummery.getString("StopNo")));
+            allRoutes.add(new Route(routeSummery.getString("stopDescription"), routeSummery.getString("stopNo")));
             JSONObject routesObj = routeSummery.getJSONObject("Routes");
             //handling situation of only one bus for station
             try {
@@ -99,15 +94,15 @@ public class RouteData {
                 int len = routeArr.length();
                 for (int i = 0; i < len; i++) {
                     JSONObject route = routeArr.getJSONObject(i);
-                    String busNumber = route.getString("RouteNo");
-                    String busDest = route.getString("RouteHeading");
+                    String busNumber = route.getString("routeNo");
+                    String busDest = route.getString("routeHeading");
                     Route newRoute = new Route(busDest, busNumber);
                     allRoutes.add(newRoute);
                 }
             } catch (JSONException e) {
                 JSONObject route = routesObj.getJSONObject("Route");
-                String busNumber = route.getString("RouteNo");
-                String busDest = route.getString("RouteHeading");
+                String busNumber = route.getString("routeNo");
+                String busDest = route.getString("routeHeading");
                 Route newRoute = new Route(busDest, busNumber);
                 allRoutes.add(newRoute);
             }
@@ -155,10 +150,10 @@ public class RouteData {
             JSONObject routeInformation = new JSONObject(text);
 
             JSONObject routeSummery = routeInformation.getJSONObject("GetNextTripsForStopResult");
-            String errorText = routeSummery.getString("Error");
+            String errorText = routeSummery.getString("error");
             //check for any errors
             errorCheck(errorText);
-            if (!bus.getStationNumber().equals(routeSummery.getString("StopNo"))) {
+            if (!bus.getStationNumber().equals(routeSummery.getString("stopNo"))) {
                 throw new IllegalStateException(context.getResources().getString(R.string.br_error_correct));
             }
             JSONObject routesObj = routeSummery.getJSONObject("Route");
@@ -167,14 +162,13 @@ public class RouteData {
             JSONArray routeArr = routesObj.getJSONArray("RouteDirection");
 
             JSONObject route = routeArr.getJSONObject(0);
-            String routeDest = route.getString("RouteLabel");
+            String routeDest = route.getString("routeLabel");
             //Check for the direction of the bus to match with wanted
             if (!bus.getBusDest().equals(routeDest)) {
                 route = routeArr.getJSONObject(1);
-                routeDest = route.getString("RouteLabel");
             }
 
-            errorText = route.getString("Error");
+            errorText = route.getString("error");
             //check for any errors
             errorCheck(errorText);
             trips = route.getJSONObject("Trips");
@@ -185,11 +179,11 @@ public class RouteData {
             JSONArray trip = trips.getJSONArray("Trip");
             JSONObject nextBus = trip.getJSONObject(0);
 
-            bus.setDelay(nextBus.getString("AdjustedScheduleTime"));
-            bus.setLatitude(nextBus.getString("Latitude"));
-            bus.setLongitude(nextBus.getString("Longitude"));
-            bus.setSpeed(nextBus.getString("GPSSpeed"));
-            bus.setStartTime(nextBus.getString("TripStartTime"));
+            bus.setDelay(nextBus.getString("adjustedScheduleTime"));
+            bus.setLatitude(nextBus.getString("latitude"));
+            bus.setLongitude(nextBus.getString("longitude"));
+            bus.setSpeed(nextBus.getString("speed"));
+            bus.setStartTime(nextBus.getString("tripStartTime"));
 
         } catch (IllegalStateException e) {
             bus.setStationNumber(e.getMessage() + context.getResources().getString(R.string.br_try_again));

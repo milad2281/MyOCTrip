@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">AndroidProject</string>
+    <string name="app_name">My OC Trip</string>
     <!--  Bus Route  -->
-    <string name="br_app_name">OCTranspo Bus Route App</string>
+    <string name="br_app_name">My OC Trip</string>
     <string name="br_search">Enter a bus station number</string>
     <string name="br_search_btn">Search</string>
     <string name="br_detail_location">Bus Location:</string>

@@ -1,27 +1,26 @@
-package algonquin.cst2335.androidproject.busroute;
+package com.ecocyrus.myoctrip.busroute;
 
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.snackbar.Snackbar;
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 
-import algonquin.cst2335.androidproject.R;
+import com.ecocyrus.myoctrip.R;
+
 /**
  * this class will create the fragment for the saved routes in the database
  */

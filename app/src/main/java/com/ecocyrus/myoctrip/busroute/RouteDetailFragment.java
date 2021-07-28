@@ -1,8 +1,6 @@
-package algonquin.cst2335.androidproject.busroute;
+package com.ecocyrus.myoctrip.busroute;
 
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -15,16 +13,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import algonquin.cst2335.androidproject.R;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import java.util.LinkedList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import com.ecocyrus.myoctrip.R;
 
 /**
  * This class provide the fragment for detailed information's about each route

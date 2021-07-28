@@ -1,4 +1,4 @@
-package algonquin.cst2335.androidproject.busroute;
+package com.ecocyrus.myoctrip.busroute;
 
 /**
  * this class is a detailed version of a bus

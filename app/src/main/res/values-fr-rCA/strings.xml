@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AndroidProject</string>
+    <string name="app_name">MyOCTrip</string>
     <string name="br_app_name">Application d\'itinéraire d\'autobus d\'OCTranspo</string>
     <string name="br_search">Entrez un numéro de gare routière</string>
     <string name="br_search_btn">Chercher</string>

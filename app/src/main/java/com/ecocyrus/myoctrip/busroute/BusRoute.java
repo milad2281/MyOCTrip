@@ -1,4 +1,4 @@
-package algonquin.cst2335.androidproject.busroute;
+package com.ecocyrus.myoctrip.busroute;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import algonquin.cst2335.androidproject.MainActivity;
-import algonquin.cst2335.androidproject.R;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -19,7 +16,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+
+import com.ecocyrus.myoctrip.R;
 
 /**
  * main class that will load the Bus Route application
@@ -43,22 +41,22 @@ public class BusRoute extends AppCompatActivity {
         toggle.syncState();
 
 
-        NavigationView navigationView = findViewById(R.id.popout_menu);
-        navigationView.setNavigationItemSelectedListener(item->{
-            switch (item.getItemId()){
-                case R.id.br_app_sg:
-                    startActivity(new Intent( this, BusRoute.class));
-                    break;
-                case R.id.br_app_mi:
-                    startActivity(new Intent( this, BusRoute.class));
-                    break;
-                case R.id.br_app_ec:
-                    startActivity(new Intent( this, BusRoute.class));
-                    break;
-            }
-            drawer.closeDrawer(GravityCompat.START);
-            return false;
-        });
+//        NavigationView navigationView = findViewById(R.id.popout_menu);
+//        navigationView.setNavigationItemSelectedListener(item->{
+//            switch (item.getItemId()){
+//                case R.id.br_app_sg:
+//                    startActivity(new Intent( this, BusRoute.class));
+//                    break;
+//                case R.id.br_app_mi:
+//                    startActivity(new Intent( this, BusRoute.class));
+//                    break;
+//                case R.id.br_app_ec:
+//                    startActivity(new Intent( this, BusRoute.class));
+//                    break;
+//            }
+//            drawer.closeDrawer(GravityCompat.START);
+//            return false;
+//        });
 
 
         busRouteList = new RouteListFragment(this);

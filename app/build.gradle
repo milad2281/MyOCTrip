@@ -5,9 +5,8 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-
     defaultConfig {
-        applicationId "algonquin.cst2335.androidproject"
+        applicationId "com.ecocyrus.myoctrip"
         minSdkVersion 22
         targetSdkVersion 30
         versionCode 1
