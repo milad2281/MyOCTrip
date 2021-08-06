@@ -1,4 +1,12 @@
 package com.ecocyrus.myoctrip.busroute;
+/***
+ * Author: Milad Mobini
+ * GitHub: milad2281
+ * Website: https://www.ecocyrus.com
+ *
+ * This code is open source and under MIT license
+ *
+ */
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -99,18 +107,18 @@ public class RouteListFragment extends Fragment {
             }
         });
         addToFavorite.setOnClickListener(e -> {
-            if (OCDB.check_route(getContext(),searchedValue)) {
+            if (OCDB.check_route(getContext(), searchedValue)) {
                 Snackbar.make(addToFavorite, getString(R.string.br_remove_from_fav), Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.br_yes), clk -> {
-                            OCDB.remove_route(getContext(),searchedValue);
-                            makeToast(searchedValue +getString(R.string.br_was_removed_fav));
+                            OCDB.remove_route(getContext(), searchedValue);
+                            makeToast(searchedValue + getString(R.string.br_was_removed_fav));
                             addToFavorite.setBackgroundResource(android.R.drawable.star_off);
                         })
                         .show();
             } else {
-                Snackbar.make(addToFavorite,getString(R.string.br_bus_added_fav) , Snackbar.LENGTH_LONG)
+                Snackbar.make(addToFavorite, getString(R.string.br_bus_added_fav), Snackbar.LENGTH_LONG)
                         .show();
-                OCDB.add_to_favorite(getContext(),searchedValue, stationName);
+                OCDB.add_to_favorite(getContext(), searchedValue, stationName);
                 addToFavorite.setBackgroundResource(android.R.drawable.star_on);
             }
         });
@@ -146,13 +154,13 @@ public class RouteListFragment extends Fragment {
         Executor newThread = Executors.newSingleThreadExecutor();
         newThread.execute(() -> {
             //getting data
-            LinkedList<Route> gottenRoutes = RouteData.getAllRoutes(searchedValue,getContext());
+            LinkedList<Route> gottenRoutes = RouteData.getAllRoutes(searchedValue, getContext());
             Route station = gottenRoutes.pollFirst();
             //checking for any errors
             if (!station.getRouteNumber().equals("-1")) {
                 parent.runOnUiThread(() -> {
 
-                    if (OCDB.check_route(getContext(),searchedValue))
+                    if (OCDB.check_route(getContext(), searchedValue))
                         addToFavorite.setBackgroundResource(android.R.drawable.star_on);
                     else
                         addToFavorite.setBackgroundResource(android.R.drawable.star_off);
@@ -207,6 +215,7 @@ public class RouteListFragment extends Fragment {
             position = p;
         }
     }
+
     /**
      * Route adapter for recycle view
      *

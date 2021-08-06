@@ -28,6 +28,7 @@ import com.ecocyrus.myoctrip.R;
  * graphics designer contact: melinamobini@protonmail.com
  *
  */
+
 /**
  * main class that will load the Bus Route application
  *
@@ -127,11 +128,12 @@ public class BusRoute extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(getString(R.string.br_help_about_text))
                         .setTitle(getString(R.string.br_help_about_title))
-                        .setPositiveButton(getString(R.string.br_check_website),(dialog, cl )->{
+                        .setPositiveButton(getString(R.string.br_check_website), (dialog, cl) -> {
                             Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.ecocyrus.com/"));
                             startActivity(myIntent);
                         });
-                builder.setNegativeButton(getString(R.string.br_close),(dialog, cl)->{});
+                builder.setNegativeButton(getString(R.string.br_close), (dialog, cl) -> {
+                });
                 builder.create().show();
                 break;
             case R.id.br_menu_favorite:

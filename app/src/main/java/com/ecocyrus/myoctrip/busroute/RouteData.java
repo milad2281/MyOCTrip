@@ -5,10 +5,9 @@ package com.ecocyrus.myoctrip.busroute;
  * Website: https://www.ecocyrus.com
  *
  * This code is open source and under MIT license
- * Credit for logo and graphics: Melina Mobini
- * graphics designer contact: melinamobini@protonmail.com
  *
  */
+
 import android.content.Context;
 import android.os.Build;
 
@@ -170,7 +169,7 @@ public class RouteData {
             }
             JSONObject routesObj = routeSummery.getJSONObject("Route");
             JSONObject trips = null;
-            try{
+            try {
                 JSONArray routeArr = routesObj.getJSONArray("RouteDirection");
 
                 JSONObject route = routeArr.getJSONObject(0);
@@ -185,7 +184,7 @@ public class RouteData {
                 //check for any errors
                 errorCheck(errorText);
                 trips = route.getJSONObject("Trips");
-            }catch (JSONException ex) {
+            } catch (JSONException ex) {
                 JSONObject route = routesObj.getJSONObject("RouteDirection");
                 trips = route.getJSONObject("Trips");
             }

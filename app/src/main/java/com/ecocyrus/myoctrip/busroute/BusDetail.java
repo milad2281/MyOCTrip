@@ -5,10 +5,9 @@ package com.ecocyrus.myoctrip.busroute;
  * Website: https://www.ecocyrus.com
  *
  * This code is open source and under MIT license
- * Credit for logo and graphics: Melina Mobini
- * graphics designer contact: melinamobini@protonmail.com
  *
  */
+
 /**
  * this class is a detailed version of a bus *
  *
@@ -47,6 +46,7 @@ public class BusDetail {
      * estimated delay time
      */
     private String delay;
+
     /**
      * Constructor for Bus Detail
      *

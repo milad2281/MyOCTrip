@@ -5,10 +5,9 @@ package com.ecocyrus.myoctrip.busroute;
  * Website: https://www.ecocyrus.com
  *
  * This code is open source and under MIT license
- * Credit for logo and graphics: Melina Mobini
- * graphics designer contact: melinamobini@protonmail.com
  *
  */
+
 /**
  * the class represents a signle route.
  * this route can be a bus station or a bus number
@@ -28,6 +27,7 @@ public class Route {
      * route id
      */
     private long id;
+
     /**
      * Constructor for route object entity
      *
@@ -38,6 +38,7 @@ public class Route {
         this.routeName = name;
         this.routeNumber = number;
     }
+
     /**
      * Constructor for route object entity
      *

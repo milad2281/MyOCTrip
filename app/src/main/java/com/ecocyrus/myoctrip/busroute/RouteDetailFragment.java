@@ -5,8 +5,6 @@ package com.ecocyrus.myoctrip.busroute;
  * Website: https://www.ecocyrus.com
  *
  * This code is open source and under MIT license
- * Credit for logo and graphics: Melina Mobini
- * graphics designer contact: melinamobini@protonmail.com
  *
  */
 import android.content.ActivityNotFoundException;

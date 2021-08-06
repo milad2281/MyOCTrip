@@ -5,10 +5,9 @@ package com.ecocyrus.myoctrip.busroute;
  * Website: https://www.ecocyrus.com
  *
  * This code is open source and under MIT license
- * Credit for logo and graphics: Melina Mobini
- * graphics designer contact: melinamobini@protonmail.com
  *
  */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -72,19 +71,19 @@ public class OCDB extends SQLiteOpenHelper {
     /**
      * This function will receive a route number and checks whether it has been added to favorite or not
      *
-     * @param context context of the layout
+     * @param context  context of the layout
      * @param routeNum bus route number to be checked
      * @return True if it is in favorite list and flase if not
      */
-    public static boolean check_route(Context context,String routeNum) {
+    public static boolean check_route(Context context, String routeNum) {
         OCDB opener = new OCDB(context);
         SQLiteDatabase db = opener.getWritableDatabase();
         LinkedList<Route> allRoutes = new LinkedList<>();
 
-        Cursor results = db.rawQuery("SELECT * FROM " + OCDB.TABLE_NAME + " WHERE "+col_routeNum+" = "+routeNum+";", null);
+        Cursor results = db.rawQuery("SELECT * FROM " + OCDB.TABLE_NAME + " WHERE " + col_routeNum + " = " + routeNum + ";", null);
         long id = -1;
         while (results.moveToNext()) {
-             id = results.getInt(results.getColumnIndex("_id"));
+            id = results.getInt(results.getColumnIndex("_id"));
         }
         return id >= 0;
     }
@@ -92,7 +91,7 @@ public class OCDB extends SQLiteOpenHelper {
     /**
      * adds a bus route to database
      *
-     * @param context context of the layout
+     * @param context   context of the layout
      * @param routeNum  the bus route number to be added to favorites
      * @param routeName the bus route name to be added to favorites
      * @return the insert id of database
@@ -110,14 +109,14 @@ public class OCDB extends SQLiteOpenHelper {
     /**
      * removes a route from favorite list
      *
-     * @param context context of the layout
+     * @param context  context of the layout
      * @param routeNum route number of the bus station to be removed
      * @return return the numbers of rows effected
      */
-    public static int remove_route(Context context,String routeNum) {
+    public static int remove_route(Context context, String routeNum) {
         OCDB opener = new OCDB(context);
         SQLiteDatabase db = opener.getWritableDatabase();
-        return db.delete(OCDB.TABLE_NAME, "RouteNumber=?",new String[] {routeNum});
+        return db.delete(OCDB.TABLE_NAME, "RouteNumber=?", new String[]{routeNum});
     }
 
     /**

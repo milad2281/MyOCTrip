@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Author: Milad Mobini
+    GitHub: milad2281
+    Website: https://www.ecocyrus.com
+
+    This code is open source and under MIT license
+-->
 
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
