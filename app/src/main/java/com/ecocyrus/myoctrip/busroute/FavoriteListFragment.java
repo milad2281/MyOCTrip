@@ -1,6 +1,15 @@
 package com.ecocyrus.myoctrip.busroute;
 
-
+/***
+ * Author: Milad Mobini
+ * GitHub: milad2281
+ * Website: https://www.ecocyrus.com
+ *
+ * This code is open source and under MIT license
+ * Credit for logo and graphics: Melina Mobini
+ * graphics designer contact: melinamobini@protonmail.com
+ *
+ */
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,20 +18,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.LinkedList;
-
 import com.ecocyrus.myoctrip.R;
 
 /**
  * this class will create the fragment for the saved routes in the database
+ *
+ * @author Milad Mobini
  */
 public class FavoriteListFragment extends Fragment {
     RecyclerView routeList;
@@ -84,10 +91,15 @@ public class FavoriteListFragment extends Fragment {
         public  void  setPosition(int p ){position = p;}
     }
 
-    /** handles the deletion of a record*/
-    public void notifyMessageDeleted(Route chosenMessage, int position) {
+    /**
+     * handles the deletion of a record
+     *
+     * @param chosenStation station object of which to be deleted
+     * @param position      position in recycle list
+     */
+    public void notifyMessageDeleted(Route chosenRoute, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(  getContext() );
-        builder.setMessage(getString(R.string.br_sure_delete) +chosenMessage.getRouteName()+getString(R.string.br_delete_from))
+        builder.setMessage(getString(R.string.br_sure_delete) +chosenRoute.getRouteName()+getString(R.string.br_delete_from))
                 .setTitle(getString(R.string.br_remove_station))
                 .setPositiveButton(getString(R.string.br_yes),(dialog, cl )->{
                     Route removedRoute = allRoutes.get(position);
@@ -105,7 +117,11 @@ public class FavoriteListFragment extends Fragment {
         builder.setNegativeButton(getString(R.string.br_no) ,(dialog, cl)->{});
         builder.create().show();
     }
-
+    /**
+     * Route adapter for recycle view
+     *
+     * @author Milad Mobini
+     */
     private class RouteAdapter extends RecyclerView.Adapter<RouteView>{
         @Override
         public int getItemViewType(int position) {
@@ -131,7 +147,9 @@ public class FavoriteListFragment extends Fragment {
             return allRoutes.size();
         }
     }
-
+    /**
+     * This function will close the page
+     */
     private void closePage(){
         BusRoute parentActivity = (BusRoute) getContext();
         parentActivity.closePage(this);

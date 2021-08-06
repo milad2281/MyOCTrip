@@ -32,6 +32,8 @@ import com.ecocyrus.myoctrip.R;
 
 /**
  * this class will provide the main view and the list of all routes
+ *
+ * @author Milad Mobini
  */
 public class RouteListFragment extends Fragment {
     RecyclerView routeList;
@@ -181,6 +183,8 @@ public class RouteListFragment extends Fragment {
 
     /**
      * A class for route view holders
+     *
+     * @author Milad Mobini
      */
     private class RouteView extends RecyclerView.ViewHolder {
         TextView routeName;
@@ -203,7 +207,11 @@ public class RouteListFragment extends Fragment {
             position = p;
         }
     }
-
+    /**
+     * Route adapter for recycle view
+     *
+     * @author Milad Mobini
+     */
     private class RouteAdapter extends RecyclerView.Adapter<RouteView> {
         @Override
         public int getItemViewType(int position) {

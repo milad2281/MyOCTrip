@@ -1,7 +1,18 @@
 package com.ecocyrus.myoctrip.busroute;
-
+/***
+ * Author: Milad Mobini
+ * GitHub: milad2281
+ * Website: https://www.ecocyrus.com
+ *
+ * This code is open source and under MIT license
+ * Credit for logo and graphics: Melina Mobini
+ * graphics designer contact: melinamobini@protonmail.com
+ *
+ */
 /**
- * this class is a detailed version of a bus
+ * this class is a detailed version of a bus *
+ *
+ * @author Milad Mobini
  */
 public class BusDetail {
     /**
@@ -36,7 +47,11 @@ public class BusDetail {
      * estimated delay time
      */
     private String delay;
-
+    /**
+     * Constructor for Bus Detail
+     *
+     * @param stationNumber station number in which the bus is wanted for
+     */
     public BusDetail(String stationNumber) {
         this.stationNumber = stationNumber;
     }

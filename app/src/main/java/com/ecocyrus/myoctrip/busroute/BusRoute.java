@@ -18,9 +18,20 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.navigation.NavigationView;
 
 import com.ecocyrus.myoctrip.R;
-
+/***
+ * Author: Milad Mobini
+ * GitHub: milad2281
+ * Website: https://www.ecocyrus.com
+ *
+ * This code is open source and under MIT license
+ * Credit for logo and graphics: Melina Mobini
+ * graphics designer contact: melinamobini@protonmail.com
+ *
+ */
 /**
  * main class that will load the Bus Route application
+ *
+ * @author Milad Mobini
  */
 public class BusRoute extends AppCompatActivity {
     RouteListFragment busRouteList;

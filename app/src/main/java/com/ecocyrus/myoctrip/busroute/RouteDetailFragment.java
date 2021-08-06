@@ -1,5 +1,14 @@
 package com.ecocyrus.myoctrip.busroute;
-
+/***
+ * Author: Milad Mobini
+ * GitHub: milad2281
+ * Website: https://www.ecocyrus.com
+ *
+ * This code is open source and under MIT license
+ * Credit for logo and graphics: Melina Mobini
+ * graphics designer contact: melinamobini@protonmail.com
+ *
+ */
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -25,6 +34,8 @@ import com.ecocyrus.myoctrip.R;
 
 /**
  * This class provide the fragment for detailed information's about each route
+ *
+ * @author Milad Mobini
  */
 public class RouteDetailFragment extends Fragment {
     BusDetail bus;
