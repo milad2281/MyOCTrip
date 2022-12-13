@@ -1,8 +1,8 @@
 package com.ecocyrus.myoctrip.busroute;
 /***
- * Author: Milad Mobini
- * GitHub: milad2281
- * Website: https://www.ecocyrus.com
+ * Author: Cyrus Mobini
+ * GitHub: cyrus2281
+ * 
  *
  * This code is open source and under MIT license
  *
@@ -41,7 +41,7 @@ import com.ecocyrus.myoctrip.R;
 /**
  * this class will provide the main view and the list of all routes
  *
- * @author Milad Mobini
+ * @author Cyrus Mobini
  */
 public class RouteListFragment extends Fragment {
     RecyclerView routeList;
@@ -192,7 +192,7 @@ public class RouteListFragment extends Fragment {
     /**
      * A class for route view holders
      *
-     * @author Milad Mobini
+     * @author Cyrus Mobini
      */
     private class RouteView extends RecyclerView.ViewHolder {
         TextView routeName;
@@ -219,7 +219,7 @@ public class RouteListFragment extends Fragment {
     /**
      * Route adapter for recycle view
      *
-     * @author Milad Mobini
+     * @author Cyrus Mobini
      */
     private class RouteAdapter extends RecyclerView.Adapter<RouteView> {
         @Override

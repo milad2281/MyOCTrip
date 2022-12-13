@@ -1,9 +1,9 @@
 package com.ecocyrus.myoctrip.busroute;
 
 /***
- * Author: Milad Mobini
- * GitHub: milad2281
- * Website: https://www.ecocyrus.com
+ * Author: Cyrus Mobini
+ * GitHub: cyrus2281
+ * 
  *
  * This code is open source and under MIT license
  *
@@ -32,7 +32,7 @@ import com.ecocyrus.myoctrip.R;
 /**
  * this class will create the fragment for the saved routes in the database
  *
- * @author Milad Mobini
+ * @author Cyrus Mobini
  */
 public class FavoriteListFragment extends Fragment {
     RecyclerView routeList;
@@ -128,7 +128,7 @@ public class FavoriteListFragment extends Fragment {
     /**
      * Route adapter for recycle view
      *
-     * @author Milad Mobini
+     * @author Cyrus Mobini
      */
     private class RouteAdapter extends RecyclerView.Adapter<RouteView> {
         @Override
