@@ -19,9 +19,9 @@ import com.google.android.material.navigation.NavigationView;
 
 import com.ecocyrus.myoctrip.R;
 /***
- * Author: Milad Mobini
- * GitHub: milad2281
- * Website: https://www.ecocyrus.com
+ * Author: Cyrus Mobini
+ * GitHub: cyrus2281
+ * 
  *
  * This code is open source and under MIT license
  * Credit for logo and graphics: Melina Mobini
@@ -32,7 +32,7 @@ import com.ecocyrus.myoctrip.R;
 /**
  * main class that will load the Bus Route application
  *
- * @author Milad Mobini
+ * @author Cyrus Mobini
  */
 public class BusRoute extends AppCompatActivity {
     RouteListFragment busRouteList;

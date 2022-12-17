@@ -1,8 +1,8 @@
 package com.ecocyrus.myoctrip.busroute;
 /***
- * Author: Milad Mobini
- * GitHub: milad2281
- * Website: https://www.ecocyrus.com
+ * Author: Cyrus Mobini
+ * GitHub: cyrus2281
+ * 
  *
  * This code is open source and under MIT license
  *
@@ -11,7 +11,7 @@ package com.ecocyrus.myoctrip.busroute;
 /**
  * this class is a detailed version of a bus *
  *
- * @author Milad Mobini
+ * @author Cyrus Mobini
  */
 public class BusDetail {
     /**

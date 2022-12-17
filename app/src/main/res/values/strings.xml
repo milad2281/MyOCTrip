@@ -1,8 +1,8 @@
 <resources>
     <!--
-    Author: Milad Mobini
-    GitHub: milad2281
-    Website: https://www.ecocyrus.com
+    Author: Cyrus Mobini
+    GitHub: cyrus2281
+    
 
     This code is open source and under MIT license
 -->
@@ -50,7 +50,7 @@
     <string name="br_error_read">There was some error reading data.\nPlease try again.</string>
     <string name="br_error_correct">Could not get the correct route.\nPlease try again.</string>
     <string name="br_error_get">There was an error getting data.\nPlease try again.</string>
-    <string name="br_help_about_text">My OC Trip     This application allows you to get all the buses passing through a pass station.     \nEnter the OCTranspo 4 digit station number in the search bar. You can see all the buses passing through there and their destination.     \nFor more information about the buses, simply click on them. If data available you will be redirected to another page with details about the bus such as time of arrival and current location of the bus.     \nYou can add you favorite stations to your favorite list for easier access.      \n\nYou can contact us by visiting the developers website.     \nCopright Milad Mobini 2021 EcoCyrus</string>
+    <string name="br_help_about_text">My OC Trip     This application allows you to get all the buses passing through a pass station.     \nEnter the OCTranspo 4 digit station number in the search bar. You can see all the buses passing through there and their destination.     \nFor more information about the buses, simply click on them. If data available you will be redirected to another page with details about the bus such as time of arrival and current location of the bus.     \nYou can add you favorite stations to your favorite list for easier access.      \n\nYou can contact us by visiting the developers website.     \nCopright Cyrus Mobini 2021 EcoCyrus</string>
     <string name="br_need_maps">You need google maps to run this feature</string>
 
 </resources>
